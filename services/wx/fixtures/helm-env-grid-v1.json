@@ -1,0 +1,92 @@
+{
+  "schema": "helm.env.grid.pack.v1",
+  "encoding": "helm.env.grid.v1",
+  "packId": "synthetic/gfs/20260701T000000Z/global-low/global",
+  "productFamily": "met-ocean",
+  "generatedAt": "2026-07-01T00:20:00Z",
+  "source": {
+    "provider": "synthetic",
+    "model": "fixture",
+    "advisoryOnly": true,
+    "notForNavigation": true,
+    "provenance": "unit-test fixture"
+  },
+  "run": {
+    "runTime": "2026-07-01T00:00:00Z",
+    "validTimes": ["2026-07-01T00:00:00Z", "2026-07-01T03:00:00Z"],
+    "timeStepSeconds": 10800
+  },
+  "transport": {
+    "container": "pmtiles",
+    "payload": "helm.env.grid.chunk.v1",
+    "rangeReadable": true,
+    "servedBy": "helm-packd",
+    "requiredRuntime": "C++",
+    "byteRangeSemantics": "offset-length",
+    "checksumAlgorithm": "sha256"
+  },
+  "coverage": {
+    "crs": "OGC:CRS84",
+    "global": true,
+    "bbox": [-180.0, -90.0, 180.0, 90.0],
+    "wrap": "antimeridian"
+  },
+  "tiers": {
+    "global-low": {
+      "role": "overview",
+      "crs": "OGC:CRS84",
+      "grid": { "dx": 0.5, "dy": 0.5, "width": 720, "height": 361 },
+      "chunking": { "lonSpan": 10.0, "latSpan": 10.0 },
+      "clientZoomRange": [0, 5]
+    }
+  },
+  "layers": {
+    "wind": {
+      "kind": "vector",
+      "tier": "global-low",
+      "bands": {
+        "u": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "m/s" },
+        "v": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "m/s" }
+      }
+    },
+    "rain": {
+      "kind": "scalar",
+      "tier": "global-low",
+      "bands": {
+        "rate": { "type": "uint16", "scale": 0.1, "offset": 0.0, "nodata": 65535, "unit": "mm/h" }
+      }
+    }
+  },
+  "chunks": {
+    "global-low/wind/20260701T000000Z/-180_-90": {
+      "schema": "helm.env.grid.chunk.v1",
+      "layer": "wind",
+      "tier": "global-low",
+      "validTime": "2026-07-01T00:00:00Z",
+      "bbox": [-180.0, -90.0, -170.0, -80.0],
+      "byteRange": [0, 4096],
+      "checksum": "sha256:fixture"
+    }
+  },
+  "failurePolicy": {
+    "missingChunk": "fail-loud",
+    "staleRun": "show-stale-status",
+    "unsupportedCapability": "fail-loud",
+    "upstreamFetchDuringGesture": "forbidden",
+    "substitution": "forbidden"
+  },
+  "renderContract": {
+    "preferredRenderer": "WebGPU",
+    "compositor": "MapLibre",
+    "alpha": "premultiplied",
+    "timeInterpolation": "value-before-color",
+    "particles": "sample-vector-grid"
+  },
+  "serviceBoundaries": {
+    "packServing": "helm-packd",
+    "runtimeEnvService": "helm-envd",
+    "cloudPackFactory": "optional",
+    "requiredRuntime": "C++",
+    "pythonRole": "reference-oracle-dev-only-after-parity"
+  }
+}

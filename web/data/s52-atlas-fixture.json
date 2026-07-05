@@ -1,0 +1,91 @@
+{
+  "schema_version": "helm.s52.atlas.web.v1",
+  "generator": "web mirror of engine/test/fixtures/s52-atlas/s52_atlas.fixture (see docs/VULKAN-S52-ATLAS-PIPELINE.md)",
+  "note": "Synthetic, repo-owned day/dusk/night values kept byte-parallel with the engine fixture. Not authoritative S-52 colors; replaced when upstream delivers atlas bytes via atlas_refs[].content_hash.",
+  "palettes": ["day", "dusk", "night"],
+  "entries": [
+    {
+      "name": "BOYSPP",
+      "kind": "symbol",
+      "width": 12,
+      "height": 12,
+      "anchor": [6, 6],
+      "repeat": [0, 0],
+      "dash": [],
+      "colors": { "day": "#f5d76e", "dusk": "#b38b2e", "night": "#8a5a22" }
+    },
+    {
+      "name": "DEPARE01",
+      "kind": "pattern",
+      "width": 8,
+      "height": 8,
+      "anchor": [0, 0],
+      "repeat": [8, 8],
+      "dash": [],
+      "colors": { "day": "#b9d7e8", "dusk": "#5f7a88", "night": "#1b3c4b" }
+    },
+    {
+      "name": "DEPCNT02",
+      "kind": "line",
+      "width": 16,
+      "height": 4,
+      "anchor": [0, 2],
+      "repeat": [0, 0],
+      "dash": [3, 2],
+      "colors": { "day": "#4a6f8a", "dusk": "#304a5a", "night": "#7eb6d6" }
+    },
+    {
+      "name": "pattern.land",
+      "kind": "pattern",
+      "width": 8, "height": 8, "anchor": [0, 0], "repeat": [8, 8], "dash": [],
+      "alpha": 0.96,
+      "colors": { "day": "#d9c7a6", "dusk": "#8a7d5f", "night": "#4a4432" }
+    },
+    {
+      "name": "pattern.depare-shallow",
+      "kind": "pattern",
+      "width": 8, "height": 8, "anchor": [0, 0], "repeat": [8, 8], "dash": [],
+      "alpha": 0.96,
+      "colors": { "day": "#a9d3ea", "dusk": "#5f7c8a", "night": "#123845" }
+    },
+    {
+      "name": "pattern.depare-mid",
+      "kind": "pattern",
+      "width": 8, "height": 8, "anchor": [0, 0], "repeat": [8, 8], "dash": [],
+      "alpha": 0.96,
+      "colors": { "day": "#cfe6f4", "dusk": "#52707d", "night": "#0f303c" }
+    },
+    {
+      "name": "pattern.depare-deep",
+      "kind": "pattern",
+      "width": 8, "height": 8, "anchor": [0, 0], "repeat": [8, 8], "dash": [],
+      "alpha": 0.96,
+      "colors": { "day": "#ecf5fb", "dusk": "#46626f", "night": "#0b2731" }
+    },
+    {
+      "name": "pattern.dredged",
+      "kind": "pattern",
+      "width": 8, "height": 8, "anchor": [0, 0], "repeat": [8, 8], "dash": [],
+      "alpha": 0.96,
+      "colors": { "day": "#cfe3ea", "dusk": "#556e78", "night": "#123039" }
+    },
+    {
+      "name": "line.coastline",
+      "kind": "line",
+      "width": 16, "height": 6, "anchor": [0, 3], "repeat": [0, 0], "dash": [],
+      "colors": { "day": "#5a4b30", "dusk": "#463a26", "night": "#2c2417" }
+    },
+    {
+      "name": "sym.sounding",
+      "kind": "symbol",
+      "width": 8, "height": 8, "anchor": [4, 4], "repeat": [0, 0], "dash": [],
+      "colors": { "day": "#1b2a36", "dusk": "#8fa2ad", "night": "#9fb6c4" }
+    },
+    {
+      "name": "sym.hazard",
+      "kind": "symbol",
+      "width": 10, "height": 10, "anchor": [5, 5], "repeat": [0, 0], "dash": [],
+      "colors": { "day": "#c8322d", "dusk": "#a02824", "night": "#e05a54" }
+    }
+  ]
+}

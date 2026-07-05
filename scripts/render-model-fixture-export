@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MAIN="$ROOT/engine/vulkan/render_model_fixture_export.cpp"
+HDR="$ROOT/engine/vulkan/render_model.h"
+BIN="${HELM_RENDER_MODEL_FIXTURE_EXPORT_BIN:-${TMPDIR:-/tmp}/helm-render-model-fixture-export}"
+CXX_BIN="${CXX:-c++}"
+
+if [ ! -x "$BIN" ] || [ "$MAIN" -nt "$BIN" ] || [ "$HDR" -nt "$BIN" ]; then
+  mkdir -p "$(dirname "$BIN")"
+  "$CXX_BIN" -std=c++17 -O2 -Wall -Wextra -pedantic -I "$ROOT/engine/vulkan" "$MAIN" -o "$BIN"
+fi
+
+exec "$BIN" "$@"

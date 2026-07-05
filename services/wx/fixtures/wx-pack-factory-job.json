@@ -1,0 +1,88 @@
+{
+  "schema": "helm.wx.pack_factory.job.v1",
+  "releaseId": "synthetic-gfs-20260701T000000Z",
+  "generatedAt": "2026-07-01T00:30:00Z",
+  "defaultSource": "synthetic-grid-fixture",
+  "modelRun": {
+    "provider": "synthetic",
+    "model": "gfs-fixture",
+    "runTime": "2026-07-01T00:00:00Z",
+    "validTimes": ["2026-07-01T00:00:00Z", "2026-07-01T03:00:00Z"],
+    "timeStepSeconds": 10800
+  },
+  "sources": [
+    {
+      "id": "synthetic-grid-fixture",
+      "type": "fixture",
+      "path": "helm-env-grid-v1.json",
+      "provider": "synthetic",
+      "generatedAt": "2026-07-01T00:20:00Z",
+      "maxSourceAgeHours": 168,
+      "license": "unit-test-fixture",
+      "provenance": "Synthetic WX-34 fixture; not for navigation",
+      "advisoryOnly": true,
+      "notForNavigation": true
+    }
+  ],
+  "packs": [
+    {
+      "profile": "global-low",
+      "tier": "global-low",
+      "anchor": "global",
+      "layers": ["wind", "rain"],
+      "coverage": {
+        "crs": "OGC:CRS84",
+        "global": true,
+        "bbox": [-180.0, -90.0, 180.0, 90.0],
+        "wrap": "antimeridian"
+      },
+      "chunks": [
+        {
+          "bbox": [-180.0, -90.0, -170.0, -80.0],
+          "layers": ["wind", "rain"],
+          "validTimes": ["2026-07-01T00:00:00Z", "2026-07-01T03:00:00Z"],
+          "anchor": "-180_-90"
+        }
+      ]
+    },
+    {
+      "profile": "route-high",
+      "tier": "route-high",
+      "anchor": "fiji-route-fixture",
+      "layers": ["wind"],
+      "coverage": {
+        "crs": "OGC:CRS84",
+        "global": false,
+        "bbox": [176.0, -19.5, 179.5, -16.0],
+        "anchor": {
+          "type": "gps-route",
+          "routeId": "fixture-fiji",
+          "driftThresholdNm": 120
+        }
+      },
+      "tierSpec": {
+        "role": "passage",
+        "crs": "OGC:CRS84",
+        "grid": { "dx": 0.25, "dy": 0.25, "width": 15, "height": 15 },
+        "chunking": { "lonSpan": 3.5, "latSpan": 3.5 },
+        "anchor": { "type": "gps-route", "driftThresholdNm": 120 },
+        "clientZoomRange": [5, 10]
+      },
+      "chunks": [
+        {
+          "bbox": [176.0, -19.5, 179.5, -16.0],
+          "layer": "wind",
+          "validTimes": ["2026-07-01T00:00:00Z", "2026-07-01T03:00:00Z"],
+          "anchor": "fiji-route-fixture"
+        }
+      ]
+    }
+  ],
+  "failurePolicy": {
+    "missingChunk": "fail-loud",
+    "staleRun": "show-stale-status",
+    "unsupportedCapability": "fail-loud",
+    "upstreamFetchDuringGesture": "forbidden",
+    "substitution": "forbidden"
+  }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="boycan-compact-s101-template-v1" data-canonical-asset="BOYCAN65" data-canonical-revision="boycan-compact-s101-template-v1" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_buoy_targeted_cleanup_v1/BOYCAN65.svg">
+  <title>BOYCAN65 Helm compact can buoy</title>
+  <desc>can buoy,yellow,full-chart. Clean-room Helm compact can-family template; shape follows S-101/OpenCPN can witness; colours replayed from DB/source row: white.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 47 L25 18 H48 L41 47 Z" fill="var(--white)" stroke="var(--black)" stroke-width="2.4"/>
+      <path d="M10 47 H28 M36 47 H54" fill="none" stroke="var(--black)" stroke-width="2.4"/>
+      <circle cx="32" cy="47" r="4.0" fill="var(--white)" stroke="var(--black)" stroke-width="2.0"/>
+  </g>
+</svg>

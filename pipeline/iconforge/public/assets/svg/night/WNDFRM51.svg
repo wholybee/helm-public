@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" preserveAspectRatio="xMidYMid meet" shape-rendering="geometricPrecision" data-origin="generated-owned-artwork" data-source-boundary="generated_owned_helm_style_derived_from_promoted_s101_witness" data-cleanroom-rerender="s101-promoted-helm-derived-v3" data-generator="forge.s101_promoted_helm_derive" data-canonical-asset="WNDFRM51" data-style-contract="helm-openbridge-navigation-v1" data-s101-witness="s101-resolved:WNDFRM51.svg">
+  <title>WNDFRM51 Helm-derived S-101 witness art</title>
+  <desc>Separate Helm artifact derived from promoted S-101 witness s101-resolved:WNDFRM51.svg. Promotion kind=symbol; original viewBox=-4.53 -4.54 9.06 9.06.</desc>
+<style><![CDATA[
+    .layout,.pivotPoint{display:none}
+    .sl,.f0{fill:none}
+    .sCHBLK{stroke:#111111}.fCHBLK{fill:#111111}
+    .sCHBRN{stroke:#9b6a27}.fCHBRN{fill:#9b6a27}
+    .sCHMGD,.sCHMGF{stroke:#c035b0}.fCHMGD,.fCHMGF{fill:#c035b0}
+    .sCHRED{stroke:#ef3340}.fCHRED{fill:#ef3340}
+    .sCHGRN{stroke:#00a651}.fCHGRN{fill:#00a651}
+    .sCHYLW{stroke:#f6d32d}.fCHYLW{fill:#f6d32d}
+    .sCHWHT{stroke:#ffffff}.fCHWHT{fill:#ffffff}
+    .sCHGRD{stroke:#7b6b2d}.fCHGRD{fill:#7b6b2d}
+    .sCHGRF{stroke:#6f7f87}.fCHGRF{fill:#6f7f87}
+    .sCHBLU{stroke:#1677c8}.fCHBLU{fill:#1677c8}
+    .sLANDF{stroke:#9b6a27}.fLANDF{fill:#9b6a27}
+    .sNINFO{stroke:#c035b0}.fNINFO{fill:#c035b0}
+    .sTRFCD,.sTRFCF{stroke:#c035b0}.fTRFCD,.fTRFCF{fill:#c035b0}
+    .sCURSR,.sSCLBR,.sCHCOR{stroke:#f07a18}.fCURSR,.fSCLBR,.fCHCOR{fill:#f07a18}
+    .helm-derived-strokes *{
+      stroke-width:0.10737778px !important;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+  ]]></style>
+  <g class="helm-derived-strokes" transform="matrix(5.96026490 0 0 5.96026490 32.00000000 32.05960265)">
+<path d=" M 0.01,-1.68 L 2.19,-1.68" class="sl f0 sLANDF" stroke-width="0.32" />
+  <path d=" M 0.01,-1.68 L -1.37,-3.31" class="sl f0 sLANDF" stroke-width="0.32" />
+  <path d=" M 0.01,-1.68 L -1.37,-0.06" class="sl f0 sLANDF" stroke-width="0.32" />
+  <circle class="f0 sLANDF" stroke-width="0.32"  cx="0" cy="-0.01" r="3.89"/>
+  <path d=" M -1.53,2.78 L 1.5,2.78" class="sl f0 sLANDF" stroke-width="0.32" />
+  <path d=" M 0,-1.7 L 0,2.77" class="sl f0 sLANDF" stroke-width="0.32" />
+  </g>
+</svg>

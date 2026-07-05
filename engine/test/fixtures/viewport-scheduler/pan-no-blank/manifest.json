@@ -1,0 +1,13 @@
+{
+  "fixture_id": "pan-no-blank",
+  "title": "Viewport scheduler pan-no-blank coverage fixture",
+  "schema_version": "helm.render.schedule.v1",
+  "request_file": "request.json",
+  "response_file": "response.json",
+  "source_epoch": "synthetic-chart-1@2026-06-28",
+  "notes": "Ensures visible+overscan coverage and adjacent zoom warming for chart-1 anchor tile.",
+  "expected_hashes": {
+    "request_json_sha256": "b29cf9fd16d951ef297e925ac053eb9d249631fc4e39fa0bf8d99d2969feebef",
+    "response_json_sha256": "8a3cbd439ba3170b7e511e9c374e3710dacd9abe320296c6ae795039814c7dcc"
+  }
+}

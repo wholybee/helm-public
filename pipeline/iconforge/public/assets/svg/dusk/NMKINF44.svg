@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Pixodesk SVG (https://pixodesk.com) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="NMKINF44" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/human_approved_nmkinf/NMKINF44.svg">
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect fill="var(--blue)" stroke="var(--black)" stroke-width="1.8" rx="3" ry="0" x="9" y="9" width="46" height="46"/>
+  </g>
+  <g fill="var(--gray)" transform="translate(-10.7983, -731.0059)scale(0.9439, 0.9439)">
+    <path fill="var(--white)" transform="translate(45.4302, -32.6239)" d="M-3.754,822.0675C-4.4328,822.0675,-4.984,822.6187,-4.984,823.2975C-4.984,823.6929,-4.7911,824.0386,-4.5011,824.2634L-4.5011,849.7528L-17.2079,849.7528C-17.2079,849.7528,-10.1028,858.5924,-4.6892,858.8606C6.1785,859.3991,18.65,849.7528,18.65,849.7528L-2.9763,849.7528L-2.9763,824.24C-2.7031,824.0146,-2.5235,823.6786,-2.5235,823.2968C-2.5235,822.618,-3.0747,822.0668,-3.7535,822.0668L-3.754,822.0675zM-2.0336,823.9465C-0.2054,833.3143,1.1205,842.2806,-2.0336,847.6629L15.9933,847.6855C12.6165,839.7712,7.3922,831.8579,-2.0336,823.9446L-2.0336,823.9465zM-5.4066,831.8998C-7.1093,840.4772,-13.1224,843.3913,-17.5781,847.7008L-5.4066,847.6857L-5.4066,831.9003L-5.4066,831.8998z"/>
+  </g>
+</svg>

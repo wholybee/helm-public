@@ -1,0 +1,87 @@
+{
+  "schema_version": "helm.render.artifact.v1",
+  "artifact_id": "chart-1-day-standard-z12.webgpu",
+  "source_model_id": "chart-1-day-standard-z12",
+  "source_epoch": "synthetic-chart-1@2026-06-28",
+  "viewport": {
+    "projection": "web_mercator_tile",
+    "geographic_bbox": {"west": -81.805000000000007, "south": 24.495000000000001, "east": -81.795000000000002, "north": 24.504999999999999},
+    "pixel_size": [8, 8],
+    "device_pixel_ratio": 1,
+    "tile": {"z": 12, "x": 1120, "y": 1756}
+  },
+  "checksums": {
+    "source_model_json_sha256": "b1e2ba0ed19a0a309d3987129bfe7fac482ca3039fbad277e2765234a6b69d42",
+    "geometry_sha256": "8c05124617a343aade5c875265a3a3046e23d37f1d607bd1f0ee64b846c66343",
+    "tables_sha256": "74b44660cd41419a0ccc5968988aaeaa247639b51fdd6e6c5c3a5151368bddfb",
+    "packet_sha256": "15cd1497e408a6d2373ffb315dd39581ad8029550c928d767592b9994db1fe1c"
+  },
+  "vertex_format": "helm.vertex.target_xy_material_pick.v1",
+  "material_table": [
+    {"material_id": "mat.cmd.raster.debug-collar", "style_key": "draw_raster_sheet", "shader_family": "RasterSheet", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": "raster.debug-collar", "blend_mode": "opaque"},
+    {"material_id": "mat.cmd.area.depare-1", "style_key": "fill_area", "shader_family": "AreaFill", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": "", "blend_mode": "alpha"},
+    {"material_id": "mat.cmd.line.depcnt-10", "style_key": "stroke_line", "shader_family": "ContourLine", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "line.depth-contour", "pattern_ref": "", "font_ref": "", "raster_texture_ref": "", "blend_mode": "alpha"},
+    {"material_id": "mat.cmd.symbol.boyspp-1", "style_key": "place_symbol", "shader_family": "SymbolInstanced", "palette_ref": "palette.day", "symbol_ref": "sym.boyspp", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": "", "blend_mode": "alpha"},
+    {"material_id": "mat.cmd.text.boyspp-label", "style_key": "draw_text", "shader_family": "TextGlyph", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "font.chart-label", "raster_texture_ref": "", "blend_mode": "alpha"},
+    {"material_id": "mat.cmd.sounding.soundg-1", "style_key": "draw_sounding", "shader_family": "TextGlyph", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "font.chart-label", "raster_texture_ref": "", "blend_mode": "alpha"}
+  ],
+  "atlas_refs": [
+    {"atlas_id": "font.chart-label", "kind": "fonts", "content_hash": "fixture-resource:font.chart-label", "slot": 0},
+    {"atlas_id": "line.depth-contour", "kind": "line_styles", "content_hash": "fixture-resource:line.depth-contour", "slot": 1},
+    {"atlas_id": "palette.day", "kind": "palettes", "content_hash": "fixture-resource:palette.day", "slot": 2},
+    {"atlas_id": "raster.debug-collar", "kind": "raster_textures", "content_hash": "fixture-resource:raster.debug-collar", "slot": 3},
+    {"atlas_id": "sym.boyspp", "kind": "symbols", "content_hash": "fixture-resource:sym.boyspp", "slot": 4}
+  ],
+  "geometry": {
+    "vertices_f32": [0, 0, 0, 1, 8, 0, 0, 1, 8, 8, 0, 1, 0, 8, 0, 1, 1, 1, 1, 2, 7, 1, 1, 2, 7, 7, 1, 2, 1, 7, 1, 2, 1, 1, 1, 2, 1, 5, 2, 3, 3, 4, 2, 3, 7, 5, 2, 3, 1, -1, 3, 4, 9, -1, 3, 4, 9, 7, 3, 4, 1, 7, 3, 4, 5, 2, 4, 5, 3, 6, 5, 6],
+    "indices_u32": [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 4, 7, 8, 9, 10, 10, 11, 12, 13, 14, 12, 14, 15, 16, 17]
+  },
+  "draw_batches": [
+    {"batch_id": "batch.cmd.raster.debug-collar", "shader_family": "RasterSheet", "topology": "triangles", "material_index": 0, "atlas_index": 3, "first_index": 0, "index_count": 6, "first_vertex": 0, "vertex_count": 4, "order_bucket": 0, "primitive_ids": ["cmd.raster.debug-collar"]},
+    {"batch_id": "batch.cmd.area.depare-1", "shader_family": "AreaFill", "topology": "triangles", "material_index": 1, "atlas_index": -1, "first_index": 6, "index_count": 9, "first_vertex": 4, "vertex_count": 5, "order_bucket": 10, "primitive_ids": ["cmd.area.depare-1"]},
+    {"batch_id": "batch.cmd.line.depcnt-10", "shader_family": "ContourLine", "topology": "line_list", "material_index": 2, "atlas_index": 1, "first_index": 15, "index_count": 4, "first_vertex": 9, "vertex_count": 3, "order_bucket": 20, "primitive_ids": ["cmd.line.depcnt-10"]},
+    {"batch_id": "batch.cmd.symbol.boyspp-1", "shader_family": "SymbolInstanced", "topology": "points", "material_index": 3, "atlas_index": 4, "first_index": 19, "index_count": 6, "first_vertex": 12, "vertex_count": 4, "order_bucket": 70, "primitive_ids": ["cmd.symbol.boyspp-1"]},
+    {"batch_id": "batch.cmd.text.boyspp-label", "shader_family": "TextGlyph", "topology": "points", "material_index": 4, "atlas_index": 0, "first_index": 25, "index_count": 1, "first_vertex": 16, "vertex_count": 1, "order_bucket": 80, "primitive_ids": ["cmd.text.boyspp-label"]},
+    {"batch_id": "batch.cmd.sounding.soundg-1", "shader_family": "TextGlyph", "topology": "points", "material_index": 5, "atlas_index": 0, "first_index": 26, "index_count": 1, "first_vertex": 17, "vertex_count": 1, "order_bucket": 90, "primitive_ids": ["cmd.sounding.soundg-1"]}
+  ],
+  "pick_records": [
+    {"primitive_id": "cmd.raster.debug-collar", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.raster.debug-collar", "provenance:prov.raster.debug-collar"], "first_index": 0, "index_count": 6, "pick_id": 1},
+    {"primitive_id": "cmd.area.depare-1", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.area.depare-1", "provenance:prov.depare-1"], "first_index": 6, "index_count": 9, "pick_id": 2},
+    {"primitive_id": "cmd.line.depcnt-10", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.line.depcnt-10", "provenance:prov.depcnt-10"], "first_index": 15, "index_count": 4, "pick_id": 3},
+    {"primitive_id": "cmd.symbol.boyspp-1", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.symbol.boyspp-1", "provenance:prov.boyspp-1"], "first_index": 19, "index_count": 6, "pick_id": 4},
+    {"primitive_id": "cmd.text.boyspp-label", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.text.boyspp-label", "provenance:prov.boyspp-1"], "first_index": 25, "index_count": 1, "pick_id": 5},
+    {"primitive_id": "cmd.sounding.soundg-1", "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.sounding.soundg-1", "provenance:prov.soundg-1"], "first_index": 26, "index_count": 1, "pick_id": 6}
+  ],
+  "diagnostics": [
+    {"severity": "info", "code": "fixture.synthetic", "message": "Synthetic command-stream fixture; not a nautical chart.", "provenance_refs": [], "suggested_action": "Use for schema and harness regression only."}
+  ],
+  "cache": {
+    "schema_version": "helm.render.artifact_cache.v1",
+    "backend_target": "webgpu",
+    "rebuild_policy": "machine_local_rebuildable",
+    "chart_epoch": "synthetic-chart-1@2026-06-28",
+    "invalidation_epoch": "e9732a4698fee90f",
+    "source_edition_chain": [
+      {"source_chart_id": "SYNTH-CHART-1", "source_chart_edition": "1", "source_update": "0"}
+    ],
+    "display_state": {
+      "palette": "day",
+      "display_category": "standard",
+      "symbol_style": "paper_chart",
+      "boundary_style": "plain",
+      "safety_depth_m": 10,
+      "safety_contour_m": 10,
+      "show_text": true,
+      "show_soundings": true,
+      "use_scamin": true
+    },
+    "schema_versions": {
+      "render_model": "helm.render.model.v1",
+      "render_artifact": "helm.render.artifact.v1",
+      "vertex_format": "helm.vertex.target_xy_material_pick.v1"
+    },
+    "artifact_packet_sha256": "15cd1497e408a6d2373ffb315dd39581ad8029550c928d767592b9994db1fe1c",
+    "cache_key": "backend_target=webgpu\nchart_epoch=synthetic-chart-1@2026-06-28\nsource_chain=SYNTH-CHART-1@1+0\ndisplay_palette=day\ndisplay_category=standard\nsymbol_style=paper_chart\nboundary_style=plain\nsafety_depth_m=10.000000\nsafety_contour_m=10.000000\nshow_text=1\nshow_soundings=1\nuse_scamin=1\nprojection=web_mercator_tile\ntile_z=12\ntile_x=1120\ntile_y=1756\npixel_width=8\npixel_height=8\nrender_model_schema=helm.render.model.v1\nrender_artifact_schema=helm.render.artifact.v1\nvertex_format=helm.vertex.target_xy_material_pick.v1\nartifact_packet_sha256=15cd1497e408a6d2373ffb315dd39581ad8029550c928d767592b9994db1fe1c\n",
+    "cache_key_sha256": "b1784eb2c576ec7982e7e46bba64f95846da5a8b4a282be89e5434e718a91182"
+  }
+}

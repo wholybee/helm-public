@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="manual-override" data-style-contract="helm-openbridge-navigation-v1" data-reference-source="openbridge_webcomponents/svg/ais-sar-aircraft-fixedwing-iec.svg" data-candidate-revision="manual-override-2026-07-04-a" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="AIRARE02" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/manual_overrides/AIRARE02.svg">
+  <title>AIRARE02 manual OpenBridge fixed-wing aircraft replacement</title>
+  <desc>Airport area: brown circle with centered fixed-wing aircraft silhouette.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="17" fill="none" stroke="var(--brown)" stroke-width="2.4"/>
+    <g transform="translate(13.4 13.4) scale(1.55)" fill="var(--brown)" stroke="none">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7.99998V4.15137C14 4.05265 13.9708 3.95615 13.916 3.87402L12.416 1.62402C12.2181 1.32715 11.7819 1.32715 11.584 1.62402L10.084 3.87402C10.0292 3.95615 9.99999 4.05265 9.99999 4.15137V7.99998L3.19999 13.1C2.81559 13.3883 3.01949 14 3.49999 14H9.99999V18L7.85355 20.1464C7.53856 20.4614 7.76165 21 8.2071 21H15.7929C16.2383 21 16.4614 20.4614 16.1464 20.1464L14 18V14H20.5C20.9805 14 21.1844 13.3883 20.8 13.1L14 7.99998ZM19 13L13 8.49998V4.30276L12 2.80276L11 4.30276V8.49998L4.99999 13H11V18.4142L9.41421 20H14.5858L13 18.4142V13H19Z"/>
+    </g>
+  </g>
+</svg>

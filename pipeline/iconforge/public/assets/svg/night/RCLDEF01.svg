@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" preserveAspectRatio="xMidYMid meet" shape-rendering="geometricPrecision" data-origin="generated-owned-artwork" data-source-boundary="generated_owned_helm_style_derived_from_promoted_s101_witness" data-cleanroom-rerender="s101-promoted-helm-derived-v3" data-generator="forge.s101_promoted_helm_derive" data-canonical-asset="RCLDEF01" data-style-contract="helm-openbridge-navigation-v1" data-s101-witness="s101-resolved:RCLDEF01.svg">
+  <title>RCLDEF01 Helm-derived S-101 witness art</title>
+  <desc>Separate Helm artifact derived from promoted S-101 witness s101-resolved:RCLDEF01.svg. Promotion kind=symbol; original viewBox=-6.71 -6.67 13.37 13.37.</desc>
+<style><![CDATA[
+    .layout,.pivotPoint{display:none}
+    .sl,.f0{fill:none}
+    .sCHBLK{stroke:#111111}.fCHBLK{fill:#111111}
+    .sCHBRN{stroke:#9b6a27}.fCHBRN{fill:#9b6a27}
+    .sCHMGD,.sCHMGF{stroke:#c035b0}.fCHMGD,.fCHMGF{fill:#c035b0}
+    .sCHRED{stroke:#ef3340}.fCHRED{fill:#ef3340}
+    .sCHGRN{stroke:#00a651}.fCHGRN{fill:#00a651}
+    .sCHYLW{stroke:#f6d32d}.fCHYLW{fill:#f6d32d}
+    .sCHWHT{stroke:#ffffff}.fCHWHT{fill:#ffffff}
+    .sCHGRD{stroke:#7b6b2d}.fCHGRD{fill:#7b6b2d}
+    .sCHGRF{stroke:#6f7f87}.fCHGRF{fill:#6f7f87}
+    .sCHBLU{stroke:#1677c8}.fCHBLU{fill:#1677c8}
+    .sLANDF{stroke:#9b6a27}.fLANDF{fill:#9b6a27}
+    .sNINFO{stroke:#c035b0}.fNINFO{fill:#c035b0}
+    .sTRFCD,.sTRFCF{stroke:#c035b0}.fTRFCD,.fTRFCF{fill:#c035b0}
+    .sCURSR,.sSCLBR,.sCHCOR{stroke:#f07a18}.fCURSR,.fSCLBR,.fCHCOR{fill:#f07a18}
+    .helm-derived-strokes *{
+      stroke-width:0.15845926px !important;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+  ]]></style>
+  <g class="helm-derived-strokes" transform="matrix(4.03889304 0 0 4.03889304 32.10097233 31.93941660)">
+<path d=" M -6.07,-0.97 L -5.94,-1.25 L -5.81,-1.5 L -5.64,-1.67 L -5.47,-1.84 L -5.21,-1.93 L -4.98,-1.91 L -4.68,-1.82 L -4.4,-1.76 L -4.17,-1.42 L -3.99,-1.23 L -3.87,-1.01 L -3.87,-0.76 L -3.99,-0.52 L -4.12,-0.31 L -4.32,-0.07 L -4.55,0.18 L -4.76,0.44 L -4.89,0.63 L -5,0.8 L -5.02,1.02 L -5.02,1.25 L -5.02,1.42 L -5,1.64 L -5,1.66" class="sl f0 sCHMGD" stroke-width="0.32" />
+  <path d=" M -5.21,2.5 L -4.68,2.5" class="sl f0 sCHMGD" stroke-width="0.64" />
+  <path d=" M 3.82,-0.97 L 3.95,-1.25 L 4.08,-1.5 L 4.25,-1.67 L 4.42,-1.84 L 4.68,-1.93 L 4.91,-1.91 L 5.21,-1.82 L 5.49,-1.76 L 5.72,-1.42 L 5.9,-1.23 L 6.02,-1.01 L 6.02,-0.76 L 5.9,-0.52 L 5.77,-0.31 L 5.57,-0.07 L 5.34,0.18 L 5.13,0.44 L 5,0.63 L 4.89,0.8 L 4.87,1.02 L 4.87,1.25 L 4.87,1.42 L 4.89,1.64 L 4.89,1.66" class="sl f0 sCHMGD" stroke-width="0.32" />
+  <path d=" M 4.68,2.5 L 5.21,2.5" class="sl f0 sCHMGD" stroke-width="0.64" />
+  <circle class="f0 sCHMGD" stroke-width="0.32"  cx="-0.01" cy="0.02" r="2.18"/>
+  <path d=" M -1.71,-1.59 L 0.01,-5.17 L 1.72,-1.59" class="sl f0 sCHMGD" stroke-width="0.32" />
+  <path d=" M 1.69,1.66 L -0.09,5.2 L -1.71,1.63" class="sl f0 sCHMGD" stroke-width="0.32" />
+  </g>
+</svg>

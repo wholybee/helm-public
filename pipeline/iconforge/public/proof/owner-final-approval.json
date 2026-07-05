@@ -1,0 +1,23 @@
+{
+  "approved_at": "2026-07-05T06:53:51Z",
+  "approved_by": "owner",
+  "db": "/private/tmp/helm-forge14/pipeline/iconforge/artifacts/opencpn_s52_portrayal.sqlite",
+  "note": "Owner approved current candidate set for posting; safety/runtime export gates remain separate and fail closed until promoted.",
+  "prior_feedback_rows_cleared": 0,
+  "proof_rows_approved": 3057,
+  "proof_symbols_approved": 815,
+  "review_db_save": {
+    "approved_rows": 1243,
+    "db": "/private/tmp/helm-forge14/pipeline/iconforge/artifacts/opencpn_s52_portrayal.sqlite",
+    "rejected_rows": 0,
+    "repair_feedback_rows": 0,
+    "source": "sqlite",
+    "status": "saved",
+    "submitted_rows": 1243
+  },
+  "review_rows_approved": 824,
+  "runtime_candidate_assets_approved": 1243,
+  "runtime_promotion": "not_granted_by_this_sweep",
+  "schema": "helm.iconforge.owner_final_approval.v1",
+  "status": "owner_final_approved"
+}

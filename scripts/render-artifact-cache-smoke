@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MAIN="$ROOT/engine/vulkan/render_artifact_cache_smoke.cpp"
+CACHE="$ROOT/engine/vulkan/render_artifact_cache.cpp"
+HDR="$ROOT/engine/vulkan/render_artifact_cache.h"
+BIN="${HELM_RENDER_ARTIFACT_CACHE_SMOKE_BIN:-${TMPDIR:-/tmp}/helm-render-artifact-cache-smoke}"
+CXX_BIN="${CXX:-c++}"
+
+if [ ! -x "$BIN" ] || [ "$MAIN" -nt "$BIN" ] || [ "$CACHE" -nt "$BIN" ] || [ "$HDR" -nt "$BIN" ]; then
+  mkdir -p "$(dirname "$BIN")"
+  "$CXX_BIN" -std=c++17 -O2 -Wall -Wextra -pedantic -I "$ROOT/engine/vulkan" "$MAIN" "$CACHE" -o "$BIN"
+fi
+
+exec "$BIN" "$@"

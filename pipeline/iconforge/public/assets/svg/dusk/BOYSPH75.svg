@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-family-preview="boysph-helm-family-v1" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="BOYSPH75" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/human_approved_boysph/BOYSPH75.svg">
+  <title>BOYSPH75 Helm BOYSPH family preview</title>
+  <desc>spherical buoy,gr,full-chart; spherical buoy body; colours green/red; pattern horizontal_bands</desc>
+  <defs>
+    <clipPath id="clip_BOYSPH75"><path d="M 18.7 45.0 C 17.0 41.5 16.3 37.1 17.1 32.4 C 17.8 27.6 20.5 22.8 24.8 19.7 C 28.8 16.8 34.1 16.0 38.9 17.7 C 43.6 19.4 47.2 23.3 48.7 28.1 C 50.4 33.5 49.6 40.0 45.7 45.0 L 18.7 45.0 Z"/></clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <g clip-path="url(#clip_BOYSPH75)">
+      <rect x="16.000" y="15.600" width="34.000" height="14.740" fill="var(--green)"/>
+      <rect x="16.000" y="30.300" width="34.000" height="14.740" fill="var(--red)"/>
+      <path d="M 17.000 30.300 H 49.000" fill="none" stroke="var(--black)" stroke-width="1.05" opacity="0.85"/>
+    </g>
+    <path d="M 18.7 45.0 C 17.0 41.5 16.3 37.1 17.1 32.4 C 17.8 27.6 20.5 22.8 24.8 19.7 C 28.8 16.8 34.1 16.0 38.9 17.7 C 43.6 19.4 47.2 23.3 48.7 28.1 C 50.4 33.5 49.6 40.0 45.7 45.0 L 18.7 45.0 Z" fill="none" stroke="var(--black)" stroke-width="2.15"/>
+    <path d="M 14.4 45 H 28.2" fill="none" stroke="var(--black)" stroke-width="2.6"/>
+    <path d="M 35.8 45 H 49.8" fill="none" stroke="var(--black)" stroke-width="2.6"/>
+    <circle cx="32" cy="45" r="3.55" fill="var(--white)" stroke="var(--black)" stroke-width="2.0"/>
+  </g>
+</svg>

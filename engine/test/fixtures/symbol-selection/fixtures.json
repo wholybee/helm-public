@@ -1,0 +1,281 @@
+{
+  "schema": "helm.chart.symbol_selection_fixtures.v1",
+  "title": "CHART-6 attribute-driven symbol selection fixtures",
+  "license": {
+    "type": "synthetic-clean-room-fixture",
+    "redistribution": "repo-owned",
+    "notes": "Fixture metadata is derived from Helm Forge clean-room evidence records. It does not vendor IHO, OpenCPN, or third-party artwork."
+  },
+  "inputs": {
+    "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+    "proof_manifest": "pipeline/iconforge/proof/manifest.json",
+    "chartplotter_rule_input": "pipeline/iconforge/proof/chartplotter-rule-input.json"
+  },
+  "palette_tokens": [
+    "day",
+    "dusk",
+    "night"
+  ],
+  "fixtures": [
+    {
+      "id": "direct-s101-obstruction",
+      "coverage_class": "direct_s101_asset",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1194,
+        "row_key": "OBSTRN_ACHARE02_1193_31245_1193",
+        "helm_catalog_id": "OBSTRN_ACHARE02_1193"
+      },
+      "source": {
+        "symbol_id": "ACHARE02",
+        "s57_object_class": "OBSTRN",
+        "normalized_object_class": "OBSTRN",
+        "attributes": {
+          "category_of_obstruction": "9",
+          "value_of_sounding": true
+        }
+      },
+      "expected": {
+        "symbol_id": "ACHARE02",
+        "s101_feature_type": "Obstruction",
+        "s101_rule_file": "PortrayalCatalog/Rules/Obstruction.lua",
+        "s101_mapping_type": "direct_asset_match",
+        "s101_resolver_status": "resolved_direct",
+        "s101_crosswalk_class": "s101_feature_equivalent",
+        "runtime_scope": "chart_portrayal",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/ACHARE02.svg",
+          "dusk": "svg-dusk/ACHARE02.svg",
+          "night": "svg-night/ACHARE02.svg"
+        }
+      }
+    },
+    {
+      "id": "boypil60-red-pillar-buoy",
+      "coverage_class": "attribute_driven_buoy",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1911,
+        "row_key": "BOYLAT_BOYPIL60_1910_30187_1910",
+        "helm_catalog_id": "BOYLAT_BOYPIL60_1910"
+      },
+      "source": {
+        "symbol_id": "BOYPIL60",
+        "s57_object_class": "BOYLAT",
+        "normalized_object_class": "BOYLAT",
+        "attributes": {
+          "buoyShape": "pillar",
+          "colour": [
+            "red"
+          ],
+          "colourPattern": "solid"
+        }
+      },
+      "expected": {
+        "symbol_id": "BOYPIL60",
+        "s101_feature_type": "LateralBuoy",
+        "s101_rule_file": "PortrayalCatalog/Rules/LateralBuoy.lua",
+        "s101_mapping_type": "direct_asset_match",
+        "s101_resolver_status": "resolved_direct",
+        "s101_crosswalk_class": "s101_feature_equivalent",
+        "runtime_scope": "chart_portrayal",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/BOYPIL60.svg",
+          "dusk": "svg-dusk/BOYPIL60.svg",
+          "night": "svg-night/BOYPIL60.svg"
+        }
+      }
+    },
+    {
+      "id": "rule-derived-daymark-topmark",
+      "coverage_class": "rule_derived_equivalent",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 2162,
+        "row_key": "DAYMAR_TOPSHQ28_2160_93930_2161",
+        "helm_catalog_id": "DAYMAR_TOPSHQ28_2160"
+      },
+      "source": {
+        "symbol_id": "TOPSHQ28",
+        "s57_object_class": "DAYMAR",
+        "normalized_object_class": "DAYMAR",
+        "attributes": {
+          "beaconShape": "beacon",
+          "colour": [
+            "red",
+            "black",
+            "white"
+          ],
+          "colourPattern": "vertical_stripes"
+        }
+      },
+      "expected": {
+        "symbol_id": "TOPSHQ28",
+        "s101_feature_type": "Daymark",
+        "s101_rule_file": "PortrayalCatalog/Rules/Daymark.lua",
+        "s101_mapping_type": "rule_derived_equivalent",
+        "s101_resolver_status": "resolved_rule",
+        "s101_crosswalk_class": "s101_feature_equivalent",
+        "runtime_scope": "chart_portrayal",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/TOPSHQ28.svg",
+          "dusk": "svg-dusk/TOPSHQ28.svg",
+          "night": "svg-night/TOPSHQ28.svg"
+        }
+      }
+    },
+    {
+      "id": "catalogue-rule-isolated-danger-beacon",
+      "coverage_class": "catalogue_rule_backed",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1732,
+        "row_key": "BCNISD_BCNGEN76_1731_30020_1731",
+        "helm_catalog_id": "BCNISD_BCNGEN76_1731"
+      },
+      "source": {
+        "symbol_id": "BCNGEN76",
+        "s57_object_class": "BCNISD",
+        "normalized_object_class": "BCNISD",
+        "attributes": {
+          "buoyShape": "buoy",
+          "colour": [
+            "black",
+            "red",
+            "black"
+          ]
+        }
+      },
+      "expected": {
+        "symbol_id": "BCNGEN76",
+        "s101_feature_type": "IsolatedDangerBeacon",
+        "s101_rule_file": "PortrayalCatalog/Rules/IsolatedDangerBeacon.lua",
+        "s101_mapping_type": "rule_derived_equivalent",
+        "s101_resolver_status": "resolved_rule_catalogue",
+        "s101_crosswalk_class": "s101_feature_equivalent",
+        "runtime_scope": "chart_portrayal",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/BCNGEN76.svg",
+          "dusk": "svg-dusk/BCNGEN76.svg",
+          "night": "svg-night/BCNGEN76.svg"
+        }
+      }
+    },
+    {
+      "id": "documented-deviation-anchor-point",
+      "coverage_class": "documented_deviation",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1715,
+        "row_key": "ACHPNT_ACHPNT01_1714_30003_1714",
+        "helm_catalog_id": "ACHPNT_ACHPNT01_963"
+      },
+      "source": {
+        "symbol_id": "ACHPNT01",
+        "s57_object_class": "ACHPNT",
+        "normalized_object_class": "ACHPNT",
+        "attributes": {}
+      },
+      "expected": {
+        "symbol_id": "ACHPNT01",
+        "s101_feature_type": "AnchorBerth",
+        "s101_rule_file": "PortrayalCatalog/Rules/AnchorBerth.lua",
+        "s101_mapping_type": "acceptable_deviation",
+        "s101_resolver_status": "resolved_with_deviation",
+        "s101_crosswalk_class": "s101_feature_equivalent_with_documented_deviation",
+        "runtime_scope": "chart_portrayal",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/ACHPNT01.svg",
+          "dusk": "svg-dusk/ACHPNT01.svg",
+          "night": "svg-night/ACHPNT01.svg"
+        }
+      }
+    },
+    {
+      "id": "non-s101-runtime-ais-default",
+      "coverage_class": "non_s101_runtime_overlay",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1609,
+        "row_key": "$CSYMB_AISDEF01_1608_31660_1608",
+        "helm_catalog_id": "$CSYMB_AISDEF01_1608"
+      },
+      "source": {
+        "symbol_id": "AISDEF01",
+        "s57_object_class": "$CSYMB",
+        "normalized_object_class": "$CSYMB",
+        "attributes": {}
+      },
+      "expected": {
+        "symbol_id": "AISDEF01",
+        "s101_feature_type": "",
+        "s101_rule_file": "",
+        "s101_mapping_type": "unresolved",
+        "s101_resolver_status": "classified_non_s101_runtime",
+        "s101_crosswalk_class": "non_s101_runtime_construct",
+        "runtime_scope": "renderer_overlay_or_ui",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/AISDEF01.svg",
+          "dusk": "svg-dusk/AISDEF01.svg",
+          "night": "svg-night/AISDEF01.svg"
+        }
+      }
+    },
+    {
+      "id": "extension-profile-border",
+      "coverage_class": "extension_profile_required",
+      "db_contract": {
+        "runtime_db": "artifacts/opencpn_s52_portrayal.sqlite",
+        "runtime_evidence_snapshot": "pipeline/iconforge/catalog/runtime_evidence_snapshot.json",
+        "s52_lookup_id": 1395,
+        "row_key": "chkpnt_BORDER01_1394_31446_1394",
+        "helm_catalog_id": "chkpnt_BORDER01_1394"
+      },
+      "source": {
+        "symbol_id": "BORDER01",
+        "s57_object_class": "chkpnt",
+        "normalized_object_class": "CHKPNT",
+        "attributes": {
+          "colour": [
+            "red"
+          ],
+          "colourPattern": "solid"
+        }
+      },
+      "expected": {
+        "symbol_id": "BORDER01",
+        "s101_feature_type": "",
+        "s101_rule_file": "",
+        "s101_mapping_type": "unresolved",
+        "s101_resolver_status": "classified_extension_requires_profile",
+        "s101_crosswalk_class": "non_s101_or_inland_extension",
+        "runtime_scope": "extension_profile_or_manual_mapping",
+        "runtime_eligible": false,
+        "default_render_allowed": false,
+        "palette_assets": {
+          "day": "svg-day/BORDER01.svg",
+          "dusk": "svg-dusk/BORDER01.svg",
+          "night": "svg-night/BORDER01.svg"
+        }
+      }
+    }
+  ]
+}

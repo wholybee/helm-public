@@ -1,0 +1,42 @@
+name: Public Symbol Catalog Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "pipeline/iconforge/public/**"
+      - ".github/workflows/public-symbol-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "public-symbol-pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Publish symbol catalog to gh-pages
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          site_dir="${RUNNER_TEMP}/helm-symbol-catalog"
+          rm -rf "${site_dir}"
+          mkdir -p "${site_dir}"
+          cp -a pipeline/iconforge/public/. "${site_dir}/"
+          touch "${site_dir}/.nojekyll"
+          git -C "${site_dir}" init
+          git -C "${site_dir}" config user.name "github-actions[bot]"
+          git -C "${site_dir}" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "${site_dir}" add -A
+          git -C "${site_dir}" commit -m "Publish public symbol catalog ${GITHUB_SHA}"
+          git -C "${site_dir}" branch -M gh-pages
+          git -C "${site_dir}" remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${site_dir}" push --force origin gh-pages

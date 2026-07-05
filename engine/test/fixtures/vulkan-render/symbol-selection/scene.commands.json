@@ -1,0 +1,397 @@
+{
+  "schema_version": "vulkan.render_scene.v0",
+  "scene_id": "symbol-selection-day-standard-z24",
+  "source_epoch": "synthetic-symbol-selection@2026-07-04",
+  "render_view": {
+    "projection": "web_mercator_tile",
+    "geographic_bbox": {
+      "west": -81.805,
+      "south": 24.495,
+      "east": -81.795,
+      "north": 24.505
+    },
+    "center": {
+      "lon": -81.8,
+      "lat": 24.5
+    },
+    "scale_denom": 24000,
+    "rotation_deg": 0,
+    "pixel_size": [
+      16,
+      16
+    ],
+    "device_pixel_ratio": 1,
+    "overzoom": true,
+    "overscan_px": 1
+  },
+  "display_state": {
+    "palette": "day",
+    "display_category": "standard",
+    "safety_depth_m": 10,
+    "show_text": false,
+    "show_soundings": false,
+    "show_lights": true,
+    "show_meta": false,
+    "simplified_symbols": false,
+    "symbol_style": "paper_chart",
+    "boundary_style": "plain",
+    "language": "en",
+    "units": "metric"
+  },
+  "resource_table": {
+    "symbols": [
+      {
+        "resource_id": "sym.ACHARE02",
+        "symbol_id": "ACHARE02",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.BOYPIL60",
+        "symbol_id": "BOYPIL60",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.TOPSHQ28",
+        "symbol_id": "TOPSHQ28",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.BCNGEN76",
+        "symbol_id": "BCNGEN76",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.ACHPNT01",
+        "symbol_id": "ACHPNT01",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.AISDEF01",
+        "symbol_id": "AISDEF01",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      },
+      {
+        "resource_id": "sym.BORDER01",
+        "symbol_id": "BORDER01",
+        "logical_size": [
+          24,
+          24
+        ],
+        "anchor": [
+          12,
+          12
+        ],
+        "source": "helm-clean-room-symbol-package"
+      }
+    ],
+    "line_styles": [],
+    "area_patterns": [],
+    "fonts": [],
+    "raster_textures": [],
+    "geometry_buffers": [],
+    "palettes": [
+      {
+        "resource_id": "palette.day",
+        "name": "day"
+      },
+      {
+        "resource_id": "palette.dusk",
+        "name": "dusk"
+      },
+      {
+        "resource_id": "palette.night",
+        "name": "night"
+      }
+    ]
+  },
+  "command_groups": [
+    {
+      "group_id": "symbol-selection-fixtures",
+      "chart_priority": 1,
+      "s52_layer": "symbol-selection",
+      "quilt_rank": 1,
+      "commands": [
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.direct-s101-obstruction",
+          "symbol_ref": "sym.ACHARE02",
+          "position": [
+            2,
+            2
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "ACHARE02.OBSTRN",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "direct-s101-obstruction",
+            "s52_lookup_id": 1194,
+            "row_key": "OBSTRN_ACHARE02_1193_31245_1193",
+            "helm_catalog_id": "OBSTRN_ACHARE02_1193",
+            "symbol_id": "ACHARE02",
+            "object_class": "OBSTRN",
+            "feature_type": "Obstruction",
+            "crosswalk_class": "s101_feature_equivalent",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.direct-s101-obstruction"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.boypil60-red-pillar-buoy",
+          "symbol_ref": "sym.BOYPIL60",
+          "position": [
+            5,
+            2
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "BOYPIL60.BOYLAT",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "boypil60-red-pillar-buoy",
+            "s52_lookup_id": 1911,
+            "row_key": "BOYLAT_BOYPIL60_1910_30187_1910",
+            "helm_catalog_id": "BOYLAT_BOYPIL60_1910",
+            "symbol_id": "BOYPIL60",
+            "object_class": "BOYLAT",
+            "feature_type": "LateralBuoy",
+            "crosswalk_class": "s101_feature_equivalent",
+            "runtime_eligible": false,
+            "attributes": {
+              "buoyShape": "pillar",
+              "colour": [
+                "red"
+              ],
+              "colourPattern": "solid"
+            }
+          },
+          "provenance_refs": [
+            "prov.boypil60-red-pillar-buoy"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.rule-derived-daymark-topmark",
+          "symbol_ref": "sym.TOPSHQ28",
+          "position": [
+            8,
+            2
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "TOPSHQ28.DAYMAR",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "rule-derived-daymark-topmark",
+            "s52_lookup_id": 2162,
+            "row_key": "DAYMAR_TOPSHQ28_2160_93930_2161",
+            "helm_catalog_id": "DAYMAR_TOPSHQ28_2160",
+            "symbol_id": "TOPSHQ28",
+            "object_class": "DAYMAR",
+            "feature_type": "Daymark",
+            "crosswalk_class": "s101_feature_equivalent",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.rule-derived-daymark-topmark"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.catalogue-rule-isolated-danger-beacon",
+          "symbol_ref": "sym.BCNGEN76",
+          "position": [
+            11,
+            2
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "BCNGEN76.BCNISD",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "catalogue-rule-isolated-danger-beacon",
+            "s52_lookup_id": 1732,
+            "row_key": "BCNISD_BCNGEN76_1731_30020_1731",
+            "helm_catalog_id": "BCNISD_BCNGEN76_1731",
+            "symbol_id": "BCNGEN76",
+            "object_class": "BCNISD",
+            "feature_type": "IsolatedDangerBeacon",
+            "crosswalk_class": "s101_feature_equivalent",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.catalogue-rule-isolated-danger-beacon"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.documented-deviation-anchor-point",
+          "symbol_ref": "sym.ACHPNT01",
+          "position": [
+            2,
+            6
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "ACHPNT01.ACHPNT",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "documented-deviation-anchor-point",
+            "s52_lookup_id": 1715,
+            "row_key": "ACHPNT_ACHPNT01_1714_30003_1714",
+            "helm_catalog_id": "ACHPNT_ACHPNT01_963",
+            "symbol_id": "ACHPNT01",
+            "object_class": "ACHPNT",
+            "feature_type": "AnchorBerth",
+            "crosswalk_class": "s101_feature_equivalent_with_documented_deviation",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.documented-deviation-anchor-point"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.non-s101-runtime-ais-default",
+          "symbol_ref": "sym.AISDEF01",
+          "position": [
+            5,
+            6
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "AISDEF01.$CSYMB",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "non-s101-runtime-ais-default",
+            "s52_lookup_id": 1609,
+            "row_key": "$CSYMB_AISDEF01_1608_31660_1608",
+            "helm_catalog_id": "$CSYMB_AISDEF01_1608",
+            "symbol_id": "AISDEF01",
+            "object_class": "$CSYMB",
+            "feature_type": "",
+            "crosswalk_class": "non_s101_runtime_construct",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.non-s101-runtime-ais-default"
+          ]
+        },
+        {
+          "type": "place_symbol",
+          "command_id": "cmd.symbol.extension-profile-border",
+          "symbol_ref": "sym.BORDER01",
+          "position": [
+            8,
+            6
+          ],
+          "coordinate_space": "target",
+          "anchor": [
+            12,
+            12
+          ],
+          "rotation_deg": 0,
+          "scale": 1,
+          "declutter_key": "BORDER01.CHKPNT",
+          "priority": 70,
+          "symbol_selection": {
+            "fixture_id": "extension-profile-border",
+            "s52_lookup_id": 1395,
+            "row_key": "chkpnt_BORDER01_1394_31446_1394",
+            "helm_catalog_id": "chkpnt_BORDER01_1394",
+            "symbol_id": "BORDER01",
+            "object_class": "CHKPNT",
+            "source_object_class": "chkpnt",
+            "feature_type": "",
+            "crosswalk_class": "non_s101_or_inland_extension",
+            "runtime_eligible": false
+          },
+          "provenance_refs": [
+            "prov.extension-profile-border"
+          ]
+        }
+      ]
+    }
+  ]
+}

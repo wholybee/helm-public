@@ -1,0 +1,215 @@
+{
+  "schema": "helm.helmcxx_parity_suite.v1",
+  "owner": "HELMC++-2",
+  "updated": "2026-07-05",
+  "policy": {
+    "runtime_inventory": "docs/runtime-inventory.json",
+    "acceptance_contract": "docs/HELMCXX-ACCEPTANCE.md",
+    "default_mode": "static contract coverage validation",
+    "contract_run_mode": "scripts/helmcxx-parity-suite.py --run-contracts",
+    "python_rule": "Python services listed here are oracle/reference/dev/offline/optional only and must not be required boat runtime."
+  },
+  "required_surfaces": [
+    "health",
+    "catalog",
+    "layers",
+    "prefetch",
+    "bundle",
+    "tile_or_range_response",
+    "metadata_allowlist",
+    "stale_offline_out_of_coverage",
+    "expected_404_204_invalid",
+    "environmental_manifest_or_chunk",
+    "headers_cache_semantics"
+  ],
+  "services": [
+    {
+      "id": "helm-server",
+      "runtime_inventory_entry": "helm-server",
+      "role": "one-origin nav, chart, health, catalog, static UI, nav websocket",
+      "language": "C++17",
+      "status": "required-runtime",
+      "oracle": "OpenCPN model/chart behavior plus previous helm-server contract smoke outputs",
+      "coverage": {
+        "health": ["engine/test-engine.sh", "engine/test-no-enc-boot.sh"],
+        "catalog": ["engine/test-engine.sh", "engine/test-no-enc-boot.sh"],
+        "tile_or_range_response": ["engine/test-engine.sh", "engine/test-no-enc-boot.sh"],
+        "stale_offline_out_of_coverage": ["engine/test-no-enc-boot.sh"],
+        "expected_404_204_invalid": ["engine/test-engine.sh"],
+        "headers_cache_semantics": ["engine/test-engine.sh", "engine/test-no-enc-boot.sh"]
+      },
+      "commands": [
+        {
+          "id": "helm-server-no-enc",
+          "command": ["bash", "engine/test-no-enc-boot.sh"],
+          "requires_any_env": ["HELM_SERVER_BIN", "HELM_OCPN_DIR"],
+          "proves": ["health", "catalog", "tile_or_range_response", "stale_offline_out_of_coverage", "headers_cache_semantics"]
+        },
+        {
+          "id": "helm-server-engine-e2e",
+          "command": ["bash", "engine/test-engine.sh"],
+          "requires_any_env": ["HELM_OCPN_DIR"],
+          "proves": ["health", "catalog", "tile_or_range_response", "expected_404_204_invalid", "headers_cache_semantics"]
+        }
+      ]
+    },
+    {
+      "id": "helm-packd",
+      "runtime_inventory_entry": "helm-packd",
+      "role": "local MBTiles/PMTiles pack service with catalog, layer inventory, prefetch, and region bundles",
+      "language": "C++17",
+      "status": "required-runtime",
+      "oracle": "pipeline/mbtiles_server.py and frozen OFFLINE manifest helpers",
+      "coverage": {
+        "health": ["pipeline/test_helm_packd_contract.py"],
+        "catalog": ["pipeline/test_helm_packd_contract.py"],
+        "layers": ["pipeline/test_helm_packd_contract.py", "pipeline/test_layer_inventory.py"],
+        "prefetch": ["pipeline/test_helm_packd_contract.py", "pipeline/test_prefetch_manifest.py"],
+        "bundle": ["pipeline/test_helm_packd_contract.py", "pipeline/test_region_bundle.py"],
+        "tile_or_range_response": ["pipeline/test_helm_packd_contract.py"],
+        "metadata_allowlist": ["pipeline/test_helm_packd_contract.py", "pipeline/test_layer_inventory.py", "pipeline/test_region_bundle.py"],
+        "stale_offline_out_of_coverage": ["pipeline/test_helm_packd_contract.py", "pipeline/test_prefetch_manifest.py", "pipeline/test_region_bundle.py"],
+        "expected_404_204_invalid": ["pipeline/test_helm_packd_contract.py", "pipeline/test_prefetch_manifest.py"],
+        "environmental_manifest_or_chunk": ["pipeline/test_helm_packd_contract.py"],
+        "headers_cache_semantics": ["pipeline/test_helm_packd_contract.py"]
+      },
+      "commands": [
+        {
+          "id": "helm-packd-contract",
+          "command": ["python3", "pipeline/test_helm_packd_contract.py"],
+          "requires_env": ["HELM_PACKD_BIN"],
+          "proves": ["health", "catalog", "layers", "prefetch", "bundle", "tile_or_range_response", "metadata_allowlist", "stale_offline_out_of_coverage", "expected_404_204_invalid", "environmental_manifest_or_chunk", "headers_cache_semantics"]
+        },
+        {
+          "id": "pack-oracle-layer-inventory",
+          "command": ["python3", "pipeline/test_layer_inventory.py"],
+          "oracle_only": true,
+          "proves": ["layers", "metadata_allowlist"]
+        },
+        {
+          "id": "pack-oracle-prefetch",
+          "command": ["python3", "pipeline/test_prefetch_manifest.py"],
+          "oracle_only": true,
+          "proves": ["prefetch", "stale_offline_out_of_coverage", "expected_404_204_invalid"]
+        },
+        {
+          "id": "pack-oracle-region-bundle",
+          "command": ["python3", "pipeline/test_region_bundle.py"],
+          "oracle_only": true,
+          "proves": ["bundle", "metadata_allowlist", "stale_offline_out_of_coverage"]
+        }
+      ]
+    },
+    {
+      "id": "helm-basemap-cache",
+      "runtime_inventory_entry": "helm-basemap-cache",
+      "role": "cache/proxy for online-fill and remote local-pack fallback",
+      "language": "C++17",
+      "status": "required-runtime",
+      "oracle": "services/basemap-fill/server.py and services/basemap-proxy-cache/server.py transitional references",
+      "coverage": {
+        "health": ["engine/test-basemap-cache.sh"],
+        "catalog": ["engine/test-basemap-cache.sh"],
+        "tile_or_range_response": ["engine/test-basemap-cache.sh"],
+        "stale_offline_out_of_coverage": ["engine/test-basemap-cache.sh"],
+        "expected_404_204_invalid": ["engine/test-basemap-cache.sh"],
+        "headers_cache_semantics": ["engine/test-basemap-cache.sh"]
+      },
+      "commands": [
+        {
+          "id": "helm-basemap-cache-smoke",
+          "command": ["bash", "engine/test-basemap-cache.sh"],
+          "requires_any_env": ["HELM_BASEMAP_CACHE_BIN", "HELM_OCPN_DIR"],
+          "proves": ["health", "catalog", "tile_or_range_response", "stale_offline_out_of_coverage", "expected_404_204_invalid", "headers_cache_semantics"]
+        }
+      ]
+    },
+    {
+      "id": "helm-envd",
+      "runtime_inventory_entry": "helm-envd-target",
+      "role": "environmental grid-pack replay and validation service",
+      "language": "C++17",
+      "status": "required-runtime-planned-until-final-cutover",
+      "oracle": "services/wx, scripts/env_grid_pack.py, and helm.env.grid.v1 fixtures",
+      "coverage": {
+        "health": ["pipeline/test_helm_envd_contract.py"],
+        "tile_or_range_response": ["pipeline/test_helm_envd_contract.py"],
+        "metadata_allowlist": ["pipeline/test_helm_envd_contract.py"],
+        "stale_offline_out_of_coverage": ["pipeline/test_helm_envd_contract.py"],
+        "expected_404_204_invalid": ["pipeline/test_helm_envd_contract.py"],
+        "environmental_manifest_or_chunk": ["pipeline/test_helm_envd_contract.py"],
+        "headers_cache_semantics": ["pipeline/test_helm_envd_contract.py"]
+      },
+      "commands": [
+        {
+          "id": "helm-envd-contract",
+          "command": ["python3", "pipeline/test_helm_envd_contract.py"],
+          "requires_env": ["HELM_ENVD_BIN"],
+          "proves": ["health", "tile_or_range_response", "metadata_allowlist", "stale_offline_out_of_coverage", "expected_404_204_invalid", "environmental_manifest_or_chunk", "headers_cache_semantics"]
+        }
+      ]
+    }
+  ],
+  "python_paths": [
+    {
+      "inventory_entry": "pipeline-mbtiles-server-python",
+      "path": "pipeline/mbtiles_server.py",
+      "HELMCXX_2_role": "oracle-only",
+      "removal_status": "removable from required runtime now; keep for fixture parity until pack contracts stabilize"
+    },
+    {
+      "inventory_entry": "basemap-fill-python-fallback",
+      "path": "services/basemap-fill/server.py",
+      "HELMCXX_2_role": "oracle-only",
+      "removal_status": "removable from required runtime now; keep visible fallback only for dev/reference until packaging removes hybrid launcher assumptions"
+    },
+    {
+      "inventory_entry": "basemap-proxy-python-reference",
+      "path": "services/basemap-proxy-cache/server.py",
+      "HELMCXX_2_role": "oracle-only",
+      "removal_status": "removable from required runtime now; keep as reference for remote local-pack proxy behavior"
+    },
+    {
+      "inventory_entry": "backend-fastapi-ai-community",
+      "path": "backend/main.py",
+      "HELMCXX_2_role": "optional-non-safety",
+      "removal_status": "not part of required chart/nav/weather runtime; may remain if optional and removable"
+    },
+    {
+      "inventory_entry": "pipeline-offline-bake-tools",
+      "path": "pipeline/",
+      "HELMCXX_2_role": "offline-bake",
+      "removal_status": "not intended for C++ required runtime; allowed as one-shot import/bake tooling"
+    },
+    {
+      "inventory_entry": "web-static-dev-server",
+      "path": "web/serve.py",
+      "HELMCXX_2_role": "dev-only",
+      "removal_status": "not shipped runtime; helm-server serves product UI"
+    },
+    {
+      "inventory_entry": "engine-test-harnesses",
+      "path": "engine/test-engine.sh",
+      "HELMCXX_2_role": "fixture/test",
+      "removal_status": "test-only harnesses may use Python helpers for ports, JSON checks, and fixtures"
+    },
+    {
+      "inventory_entry": "web-test-harnesses",
+      "path": "web/test",
+      "HELMCXX_2_role": "fixture/test",
+      "removal_status": "test-only Playwright/unit harnesses are outside required boat runtime"
+    },
+    {
+      "inventory_entry": "remote-parity-launcher",
+      "path": "scripts/update-remote-parity.sh",
+      "HELMCXX_2_role": "dev-operator-hybrid-only",
+      "removal_status": "must not become HELMC++ packaging proof; HELMC++-6 owns no-Python install/start path"
+    },
+    {
+      "inventory_entry": "wx-refresh-scheduled-bake",
+      "path": "scripts/wx_refresh_once.py",
+      "HELMCXX_2_role": "offline-bake",
+      "removal_status": "permanent offline-bake tooling; never part of required C++ runtime — helm-envd (C++) serves, this one-shot only bakes and republishes on an OS timer"
+    }
+  ]
+}

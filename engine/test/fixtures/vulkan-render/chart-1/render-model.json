@@ -1,0 +1,251 @@
+{
+  "schema_version": "helm.render.model.v1",
+  "model_id": "chart-1-day-standard-z12",
+  "source_epoch": "synthetic-chart-1@2026-06-28",
+  "render_view": {"projection": "web_mercator_tile", "geographic_bbox": {"west": -81.805, "south": 24.495, "east": -81.795, "north": 24.505}, "center": {"lon": -81.8, "lat": 24.5}, "scale_denom": 12000, "rotation_deg": 0, "pixel_size": [8, 8], "device_pixel_ratio": 1, "overzoom": false, "overscan_px": 1},
+  "display_state": {"palette": "day", "display_category": "standard", "symbol_style": "paper_chart", "boundary_style": "plain", "safety_depth_m": 10, "shallow_contour_m": 5, "safety_contour_m": 10, "deep_contour_m": 20, "show_text": true, "show_soundings": true, "show_lights": true, "simplified_symbols": false, "two_shade_depth": false, "use_scamin": true, "use_super_scamin": false, "language": "en", "units": "metric"},
+  "resources": [
+    {"resource_id": "font.chart-label", "kind": "fonts", "material_key": "font.chart-label", "content_hash": "fixture-resource:font.chart-label", "provenance_refs": []},
+    {"resource_id": "line.depth-contour", "kind": "line_styles", "material_key": "line.depth-contour", "content_hash": "fixture-resource:line.depth-contour", "provenance_refs": []},
+    {"resource_id": "palette.day", "kind": "palettes", "material_key": "palette.day", "content_hash": "fixture-resource:palette.day", "provenance_refs": []},
+    {"resource_id": "raster.debug-collar", "kind": "raster_textures", "material_key": "raster.debug-collar", "content_hash": "fixture-resource:raster.debug-collar", "provenance_refs": []},
+    {"resource_id": "sym.boyspp", "kind": "symbols", "material_key": "sym.boyspp", "content_hash": "fixture-resource:sym.boyspp", "provenance_refs": []}
+  ],
+  "layers": [
+    {
+      "layer_id": "background-raster",
+      "kind": "raster_base",
+      "authority": "vulkan.render_scene.v0",
+      "order_bucket": 0,
+      "primitives": [
+        {
+          "primitive_id": "cmd.raster.debug-collar",
+          "kind": "RasterPatch",
+          "order": {"chart_priority": 0, "quilt_rank": 0, "display_priority": 0, "render_pass_rank": 0, "source_sequence": 0, "extension": [0]},
+          "material": {"material_id": "mat.cmd.raster.debug-collar", "style_key": "draw_raster_sheet", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": "raster.debug-collar"},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "RASTER-DEBUG-1",
+            "source_feature_sub_id": "cmd.raster.debug-collar",
+            "object_class": "RASTER",
+            "attributes": [],
+            "source_geometry_hash": "synthetic-raster-full-tile",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "draw_raster_sheet",
+            "conversion_stage": "synthetic-raster-sheet",
+            "transform_chain": ["fixture-raster-pixels", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.full-tile",
+            "target_bounds": [0, 0, 8, 8],
+            "provenance_refs": ["prov.raster.debug-collar"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.raster.debug-collar", "provenance:prov.raster.debug-collar"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "raster", "contour_role": "", "danger_class": "", "display_state": "visible", "safety_relevant": false},
+          "payload": {
+            "type": "RasterPatch",
+            "texture_ref": "raster.debug-collar",
+            "source_quad": [[0, 0], [8, 0], [8, 8], [0, 8]],
+            "target_quad": [[0, 0], [8, 0], [8, 8], [0, 8]],
+            "source_space": "raster",
+            "target_space": "target",
+            "opacity": 1,
+            "collar_policy": "retained-for-debug",
+            "coverage_policy": "fixture-full-tile"
+          }
+        }
+      ]
+    },
+    {
+      "layer_id": "s52-base",
+      "kind": "area",
+      "authority": "vulkan.render_scene.v0",
+      "order_bucket": 1,
+      "primitives": [
+        {
+          "primitive_id": "cmd.area.depare-1",
+          "kind": "AreaFill",
+          "order": {"chart_priority": 1, "quilt_rank": 1, "display_priority": 110, "render_pass_rank": 10, "source_sequence": 1, "extension": [0]},
+          "material": {"material_id": "mat.cmd.area.depare-1", "style_key": "fill_area", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": ""},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "DEPARE-1",
+            "source_feature_sub_id": "cmd.area.depare-1",
+            "object_class": "DEPARE",
+            "attributes": [{"code": "depth_range_m", "value": "0,10"}, {"code": "geometry_type", "value": "polygon"}],
+            "source_geometry_hash": "synthetic-depare-square",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "fill_area",
+            "conversion_stage": "area-fill-command",
+            "transform_chain": ["wgs84", "web-mercator", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.primary",
+            "target_bounds": [1, 1, 6, 6],
+            "provenance_refs": ["prov.depare-1"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.area.depare-1", "provenance:prov.depare-1"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "shoal", "contour_role": "depth_area", "danger_class": "", "display_state": "visible", "safety_relevant": true},
+          "payload": {
+            "type": "AreaFill",
+            "rings": [[[1, 1], [7, 1], [7, 7], [1, 7], [1, 1]]],
+            "coordinate_space": "target",
+            "fill": {"color": "#b9d7e8", "pattern_ref": "", "opacity": 1},
+            "clip_ref": ""
+          }
+        },
+        {
+          "primitive_id": "cmd.line.depcnt-10",
+          "kind": "ContourLine",
+          "order": {"chart_priority": 1, "quilt_rank": 1, "display_priority": 120, "render_pass_rank": 20, "source_sequence": 2, "extension": [0]},
+          "material": {"material_id": "mat.cmd.line.depcnt-10", "style_key": "stroke_line", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "line.depth-contour", "pattern_ref": "", "font_ref": "", "raster_texture_ref": ""},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "DEPCNT-10",
+            "source_feature_sub_id": "cmd.line.depcnt-10",
+            "object_class": "DEPCNT",
+            "attributes": [{"code": "depth_m", "value": "10"}, {"code": "geometry_type", "value": "line"}],
+            "source_geometry_hash": "synthetic-depcnt-polyline",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "stroke_line",
+            "conversion_stage": "stroke-line-command",
+            "transform_chain": ["wgs84", "web-mercator", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.primary",
+            "target_bounds": [1, 4, 6, 1],
+            "provenance_refs": ["prov.depcnt-10"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.line.depcnt-10", "provenance:prov.depcnt-10"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "safety_contour", "contour_role": "safety_contour", "danger_class": "", "display_state": "visible", "safety_relevant": true},
+          "payload": {
+            "type": "ContourLine",
+            "polyline": [[1, 5], [3, 4], [7, 5]],
+            "coordinate_space": "target",
+            "contour_m": 10,
+            "contour_role": "depth_contour",
+            "stroke": {"color": "#4a6f8a", "line_style_ref": "line.depth-contour", "width_px": 1, "join": "round", "cap": "round", "dash_phase": 0}
+          }
+        },
+        {
+          "primitive_id": "cmd.symbol.boyspp-1",
+          "kind": "SymbolInstance",
+          "order": {"chart_priority": 1, "quilt_rank": 1, "display_priority": 170, "render_pass_rank": 70, "source_sequence": 3, "extension": [80]},
+          "material": {"material_id": "mat.cmd.symbol.boyspp-1", "style_key": "place_symbol", "palette_ref": "palette.day", "symbol_ref": "sym.boyspp", "line_style_ref": "", "pattern_ref": "", "font_ref": "", "raster_texture_ref": ""},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "BOYSPP-1",
+            "source_feature_sub_id": "cmd.symbol.boyspp-1",
+            "object_class": "BOYSPP",
+            "attributes": [{"code": "geometry_type", "value": "point"}, {"code": "symbol", "value": "BOYSPP"}],
+            "source_geometry_hash": "synthetic-buoy-point",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "place_symbol",
+            "conversion_stage": "symbol-and-label-commands",
+            "transform_chain": ["wgs84", "web-mercator", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.primary",
+            "target_bounds": [5, 2, 0, 1],
+            "provenance_refs": ["prov.boyspp-1"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.symbol.boyspp-1", "provenance:prov.boyspp-1"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "aid_to_navigation", "contour_role": "", "danger_class": "", "display_state": "visible", "safety_relevant": true},
+          "payload": {
+            "type": "SymbolInstance",
+            "symbol_ref": "sym.boyspp",
+            "position": [5, 3],
+            "coordinate_space": "target",
+            "anchor": [6, 6],
+            "rotation_deg": 0,
+            "scale": 1,
+            "declutter_key": "boy-synthetic-1",
+            "priority": 80
+          }
+        },
+        {
+          "primitive_id": "cmd.text.boyspp-label",
+          "kind": "TextLabel",
+          "order": {"chart_priority": 1, "quilt_rank": 1, "display_priority": 180, "render_pass_rank": 80, "source_sequence": 4, "extension": [70]},
+          "material": {"material_id": "mat.cmd.text.boyspp-label", "style_key": "draw_text", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "font.chart-label", "raster_texture_ref": ""},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "BOYSPP-1",
+            "source_feature_sub_id": "cmd.text.boyspp-label",
+            "object_class": "BOYSPP",
+            "attributes": [{"code": "geometry_type", "value": "point"}, {"code": "symbol", "value": "BOYSPP"}],
+            "source_geometry_hash": "synthetic-buoy-point",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "draw_text",
+            "conversion_stage": "symbol-and-label-commands",
+            "transform_chain": ["wgs84", "web-mercator", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.primary",
+            "target_bounds": [5, 2, 0, 1],
+            "provenance_refs": ["prov.boyspp-1"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.text.boyspp-label", "provenance:prov.boyspp-1"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "aid_to_navigation", "contour_role": "", "danger_class": "", "display_state": "visible", "safety_relevant": true},
+          "payload": {
+            "type": "TextLabel",
+            "text": "Synthetic buoy",
+            "text_run_refs": [],
+            "position": [5, 2],
+            "coordinate_space": "target",
+            "anchor": [0.5, 0.5],
+            "rotation_deg": 0,
+            "font_ref": "font.chart-label",
+            "halo": {"color": "#ffffff", "width_px": 1},
+            "priority": 70,
+            "collision_box": [2, 1, 6, 2]
+          }
+        },
+        {
+          "primitive_id": "cmd.sounding.soundg-1",
+          "kind": "Sounding",
+          "order": {"chart_priority": 1, "quilt_rank": 1, "display_priority": 190, "render_pass_rank": 90, "source_sequence": 5, "extension": [60]},
+          "material": {"material_id": "mat.cmd.sounding.soundg-1", "style_key": "draw_sounding", "palette_ref": "palette.day", "symbol_ref": "", "line_style_ref": "", "pattern_ref": "", "font_ref": "font.chart-label", "raster_texture_ref": ""},
+          "source_trace": {
+            "source_chart_id": "SYNTH-CHART-1",
+            "source_chart_edition": "1",
+            "source_update": "0",
+            "source_feature_id": "SOUNDG-1",
+            "source_feature_sub_id": "cmd.sounding.soundg-1",
+            "object_class": "SOUNDG",
+            "attributes": [{"code": "depth_m", "value": "7.4"}, {"code": "geometry_type", "value": "point"}],
+            "source_geometry_hash": "synthetic-sounding-point",
+            "presentation_authority": "vulkan.render_scene.v0",
+            "presentation_rule_id": "draw_sounding",
+            "conversion_stage": "sounding-command",
+            "transform_chain": ["wgs84", "web-mercator", "target-pixels"],
+            "quilt_decision_id": "quilt.synthetic.primary",
+            "target_bounds": [3, 6, 0, 0],
+            "provenance_refs": ["prov.soundg-1"],
+            "inspection_handles": ["fixture:chart-1", "scene:chart-1-day-standard-z12", "command:cmd.sounding.soundg-1", "provenance:prov.soundg-1"]
+          },
+          "scale": {"native_scale": 12000, "min_scale_denom": 3000, "max_scale_denom": 48000, "scamin_max_scale": 48000, "use_scamin": true, "use_super_scamin": false, "overzoom": false},
+          "safety": {"display_category": "standard", "safety_class": "shoal", "contour_role": "", "danger_class": "", "display_state": "visible", "safety_relevant": true},
+          "payload": {
+            "type": "Sounding",
+            "depth_m": 7.4,
+            "formatted_text": "7.4",
+            "position": [3, 6],
+            "coordinate_space": "target",
+            "font_ref": "font.chart-label",
+            "priority": 60,
+            "safety_class": "shoal"
+          }
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {"severity": "info", "code": "fixture.synthetic", "message": "Synthetic command-stream fixture; not a nautical chart.", "provenance_refs": [], "suggested_action": "Use for schema and harness regression only."}
+  ]
+}

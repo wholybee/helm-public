@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="150" height="150" role="img"
+  data-origin="helm-cleanroom-artwork" data-style-contract="helm-openbridge-navigation-v1"
+  data-cleanroom-revision="helm-cleanroom-topmarks-v1" data-cleanroom-generator="semantic-topmark-primitives"
+  data-cleanroom-source="db-topmark-shape-code" data-cleanroom-shape-code="8"
+  data-s101-witness="TOPMAR86" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="TOPSHPP2" data-canonical-revision="canonical-by-asset-v1" data-canonical-source="assets/svg/helm_cleanroom/TOPSHPP2.svg" data-helm-proof-render="helm-resolved-attributes" data-helm-preview-colour="yellow" data-helm-preview-source="canonical-art-plus-db-row-attributes">
+  <title>TOPSHPP2 clean-room topmark</title>
+  <desc>Helm clean-room primitive for TOPSHP shape 8: upright cross (St George's cross). S-101/OpenCPN art is witness evidence only.</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <path d="M19 32 L45 32" fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M32 19 L32 45" fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+{
+  "schema": "helm.render.schedule.request.v1",
+  "request_id": "sched-req-pan-z12-001",
+  "intent": "visible",
+  "visible": {
+    "projection": "web_mercator_tile",
+    "z": 12,
+    "center": {
+      "lon": -81.8,
+      "lat": 24.5
+    },
+    "anchor_tile": {
+      "z": 12,
+      "x": 1120,
+      "y": 1756
+    },
+    "viewport_px": [
+      256,
+      256
+    ],
+    "device_pixel_ratio": 1,
+    "rotation_deg": 0
+  },
+  "overscan": {
+    "margin_px": 16,
+    "margin_tiles": 1
+  },
+  "neighbor_policy": {
+    "cardinal": true,
+    "diagonal": true,
+    "ring_count": 1
+  },
+  "zoom_policy": {
+    "adjacent_offsets": [
+      -1,
+      1
+    ],
+    "include_children": true,
+    "include_parent": true
+  },
+  "display_fingerprint": "day:standard:10:5:10:20:text:on:soundings:on",
+  "source_epoch_hint": "synthetic-chart-1@2026-06-28",
+  "client_epoch": 42,
+  "renderer": {
+    "backend": "vulkan",
+    "scene_schema": "helm.render.model.v1",
+    "renderer_sha": "fixture-renderer-sha"
+  }
+}

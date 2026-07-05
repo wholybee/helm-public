@@ -1,0 +1,71 @@
+{
+  "schema_version": "helm.inspect.trace.v1",
+  "trace_id": "inspect.chart-1.boyspp-1.pixel-5-3",
+  "pick": {
+    "pixel": [5, 3],
+    "device_pixel_ratio": 1,
+    "viewport_id": "fixture.chart-1.day-standard-z12",
+    "backend": "cpu-reference",
+    "scene_id": "chart-1-day-standard-z12",
+    "model_id": "model.chart-1.day-standard-z12"
+  },
+  "resolution": {
+    "kind": "vector_feature",
+    "feature_metadata_available": true
+  },
+  "draw_record": {
+    "draw_record_id": "draw.chart-1.cmd.symbol.boyspp-1",
+    "command_id": "cmd.symbol.boyspp-1",
+    "command_type": "place_symbol",
+    "primitive_id": "prim.boyspp-1.symbol",
+    "primitive_kind": "SymbolInstance",
+    "artifact_id": "artifact.chart-1.tile-256",
+    "layer_id": "layer.s52-base",
+    "provenance_refs": [
+      "prov.boyspp-1"
+    ]
+  },
+  "presentation": {
+    "presentation_authority": "s52",
+    "presentation_rule_id": "rule.BOYSPP",
+    "material_id": "mat.boyspp.day-standard",
+    "style_key": "sym.boyspp",
+    "conversion_stage": "symbol-and-label-commands"
+  },
+  "source": {
+    "source_chart_id": "SYNTH-CHART-1",
+    "source_chart_edition": "1",
+    "source_update": "0",
+    "source_feature_id": "BOYSPP-1",
+    "source_feature_sub_id": null,
+    "object_class": "BOYSPP",
+    "attributes": [
+      {
+        "code": "BOYSHP",
+        "value": "1"
+      },
+      {
+        "code": "COLOUR",
+        "value": "3,1"
+      }
+    ],
+    "source_geometry_hash": "synthetic-buoy-point",
+    "transform_chain": [
+      "wgs84",
+      "web-mercator",
+      "target-pixels"
+    ],
+    "quilt_decision_id": "quilt.synthetic.primary"
+  },
+  "raster_fallback": {
+    "active": false,
+    "reason": null,
+    "message": null,
+    "sidecar_metadata_available": false,
+    "sidecar_name": null
+  },
+  "inspection_handles": [
+    "inspect.BOYSPP-1"
+  ],
+  "warnings": []
+}

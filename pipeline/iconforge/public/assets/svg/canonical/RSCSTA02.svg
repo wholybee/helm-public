@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" preserveAspectRatio="xMidYMid meet" shape-rendering="geometricPrecision" data-origin="generated-owned-artwork" data-source-boundary="generated_owned_helm_style_derived_from_promoted_s101_witness" data-cleanroom-rerender="s101-promoted-helm-derived-v3" data-generator="forge.s101_promoted_helm_derive" data-canonical-asset="RSCSTA02" data-style-contract="helm-openbridge-navigation-v1" data-s101-witness="s101-resolved:RSCSTA02.svg">
+  <title>RSCSTA02 Helm-derived S-101 witness art</title>
+  <desc>Separate Helm artifact derived from promoted S-101 witness s101-resolved:RSCSTA02.svg. Promotion kind=symbol; original viewBox=-3.15 -3.14 6.28 6.28.</desc>
+<style><![CDATA[
+    .layout,.pivotPoint{display:none}
+    .sl,.f0{fill:none}
+    .sCHBLK{stroke:#111111}.fCHBLK{fill:#111111}
+    .sCHBRN{stroke:#9b6a27}.fCHBRN{fill:#9b6a27}
+    .sCHMGD,.sCHMGF{stroke:#c035b0}.fCHMGD,.fCHMGF{fill:#c035b0}
+    .sCHRED{stroke:#ef3340}.fCHRED{fill:#ef3340}
+    .sCHGRN{stroke:#00a651}.fCHGRN{fill:#00a651}
+    .sCHYLW{stroke:#f6d32d}.fCHYLW{fill:#f6d32d}
+    .sCHWHT{stroke:#ffffff}.fCHWHT{fill:#ffffff}
+    .sCHGRD{stroke:#7b6b2d}.fCHGRD{fill:#7b6b2d}
+    .sCHGRF{stroke:#6f7f87}.fCHGRF{fill:#6f7f87}
+    .sCHBLU{stroke:#1677c8}.fCHBLU{fill:#1677c8}
+    .sLANDF{stroke:#9b6a27}.fLANDF{fill:#9b6a27}
+    .sNINFO{stroke:#c035b0}.fNINFO{fill:#c035b0}
+    .sTRFCD,.sTRFCF{stroke:#c035b0}.fTRFCD,.fTRFCF{fill:#c035b0}
+    .sCURSR,.sSCLBR,.sCHCOR{stroke:#f07a18}.fCURSR,.fSCLBR,.fCHCOR{fill:#f07a18}
+    .helm-derived-strokes *{
+      stroke-width:0.07442963px !important;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+  ]]></style>
+  <g class="helm-derived-strokes" transform="matrix(8.59872611 0 0 8.59872611 32.08598726 32.00000000)">
+<defs>
+    <clipPath id="s101_resolved_clip_RSCSTA02">
+      <path d=" M -0.01,-2 L -1.01,0 L -0.01,2 L 0.99,0 L -0.01,-2 Z"/>
+    </clipPath>
+  </defs>
+  <g shape-rendering="geometricPrecision">
+    <rect x="-1.01" y="-2" width="2" height="4" fill="#000000" clip-path="url(#s101_resolved_clip_RSCSTA02)"/>
+    <path d=" M -0.01,-2 L -1.01,0 L -0.01,2 L 0.99,0 L -0.01,-2 Z" fill="none" stroke="#000000" stroke-width="0.64" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d=" M -2.51,0 L -2.51,0 L -1.01,0 L -0.01,0 L 0.49,0 L 1.99,0 L 2.49,0 L 2.49,0" fill="none" stroke="#000000" stroke-width="0.64" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  </g>
+</svg>

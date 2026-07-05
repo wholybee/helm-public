@@ -1,0 +1,25 @@
+{
+  "schema_version": "helm.inspect.trace.v1",
+  "trace_id": "inspect.chart-1.no-hit.pixel-0-0",
+  "pick": {
+    "pixel": [0, 0],
+    "device_pixel_ratio": 1,
+    "viewport_id": "fixture.chart-1.day-standard-z12",
+    "backend": "cpu-reference",
+    "scene_id": "chart-1-day-standard-z12",
+    "model_id": "model.chart-1.day-standard-z12"
+  },
+  "resolution": {
+    "kind": "no_hit",
+    "feature_metadata_available": false
+  },
+  "raster_fallback": {
+    "active": false,
+    "reason": null,
+    "message": null,
+    "sidecar_metadata_available": false,
+    "sidecar_name": null
+  },
+  "inspection_handles": [],
+  "warnings": []
+}

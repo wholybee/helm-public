@@ -1,0 +1,90 @@
+name: Public Symbol Feedback Intake
+
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+  workflow_dispatch:
+    inputs:
+      issue_body:
+        description: "Raw review JSON or a GitHub issue body containing a fenced JSON block"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  normalize:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.issue.body, 'helm.forge.public_review_decisions.v1') ||
+      contains(github.event.issue.title, 'Symbol feedback') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'symbol-feedback')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Write feedback input
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          MANUAL_BODY: ${{ inputs.issue_body }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import pathlib
+          body = os.environ.get("MANUAL_BODY") if os.environ.get("EVENT_NAME") == "workflow_dispatch" else os.environ.get("ISSUE_BODY")
+          pathlib.Path("symbol-feedback-input.md").write_text(body or "", encoding="utf-8")
+          PY
+
+      - name: Normalize feedback
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          REVIEWER: ${{ github.event.issue.user.login || github.actor }}
+        run: |
+          python3 scripts/normalize-symbol-feedback.py \
+            --site-index pipeline/iconforge/public/proof/site-index.json \
+            --input symbol-feedback-input.md \
+            --output-dir symbol-feedback-artifact \
+            --source-type "${{ github.event_name }}" \
+            --issue-number "${ISSUE_NUMBER}" \
+            --issue-url "${ISSUE_URL}" \
+            --reviewer "${REVIEWER}"
+
+      - name: Upload normalized artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbol-feedback-normalized
+          path: symbol-feedback-artifact/
+          if-no-files-found: error
+
+      - name: Dispatch private repair import
+        env:
+          GH_TOKEN: ${{ secrets.HELM_PRIVATE_FEEDBACK_TOKEN }}
+          PRIVATE_REPO: ${{ vars.HELM_PRIVATE_REPO || 'StevenRidder/Helm' }}
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "HELM_PRIVATE_FEEDBACK_TOKEN is not configured; leaving normalized feedback as a public artifact."
+            exit 0
+          fi
+          gh api "repos/${PRIVATE_REPO}/dispatches" \
+            --method POST \
+            -f event_type=symbol_feedback_normalized \
+            -F client_payload=@symbol-feedback-artifact/symbol-feedback-normalized.json
+
+      - name: Comment with intake result
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          COUNT="$(python3 - <<'PY'
+          import json
+          print(json.load(open("symbol-feedback-artifact/symbol-feedback-normalized.json"))["count"])
+          PY
+          )"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "Normalized ${COUNT} symbol feedback record(s). Maintainers can download the \`symbol-feedback-normalized\` workflow artifact and import it into the private Helm repair queue. This does not mutate canonical SVG/DB rows or runtime eligibility."

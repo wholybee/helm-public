@@ -1,0 +1,88 @@
+{
+  "fixture_id": "chart-1",
+  "title": "Synthetic chart-1 command-stream smoke fixture",
+  "schema_version": "vulkan.render_scene.v0",
+  "scene_id": "chart-1-day-standard-z12",
+  "source_file": "source.json",
+  "scene_file": "scene.commands.json",
+  "provenance_file": "provenance.json",
+  "render_model_file": "render-model.json",
+  "render_model_binary_file": "render-model.bin",
+  "render_artifact_file": "render-artifact.json",
+  "render_artifact_binary_file": "render-artifact.bin",
+  "license": {
+    "type": "synthetic",
+    "redistribution": "repo-owned",
+    "notes": "No third-party chart data. Geometry is synthetic and intentionally tiny."
+  },
+  "capture_matrix": [
+    {
+      "name": "day-standard-z12",
+      "palette": "day",
+      "display_category": "standard",
+      "safety_depth_m": 10,
+      "projection": "web_mercator_tile",
+      "tile": {
+        "z": 12,
+        "x": 1120,
+        "y": 1756
+      },
+      "pixel_size": [
+        8,
+        8
+      ]
+    }
+  ],
+  "required_command_types": [
+    "fill_area",
+    "stroke_line",
+    "place_symbol",
+    "draw_text",
+    "draw_sounding",
+    "draw_raster_sheet"
+  ],
+  "expected_hashes": {
+    "source_json_sha256": "fa51556785a01ed7c5a1d6da0347cc7d61ee505c6f5eb86733d832d1705a164a",
+    "scene_commands_json_sha256": "cbe6b18f37bdcc57e998bd4e887b21b2b809d7e49d63a5a9eb73c83b06a1ceef",
+    "provenance_json_sha256": "7bf3873c8902bc840cb4459dbf5abf7ad2fa8c4813a1a74771069bbc2991a573",
+    "render_model_json_sha256": "b1e2ba0ed19a0a309d3987129bfe7fac482ca3039fbad277e2765234a6b69d42",
+    "render_model_binary_sha256": "0b06e548bd4e31c386d275c3552e923b2e4ac28df26d67e92ec8c73b7a8b3aba",
+    "render_artifact_json_sha256": "5446ed6cc9291c463ddfee685830755c3de5ed7060c3d481637e48d4b6561afa",
+    "render_artifact_binary_sha256": "15cd1497e408a6d2373ffb315dd39581ad8029550c928d767592b9994db1fe1c",
+    "render_artifact_cache_key_sha256": "b1784eb2c576ec7982e7e46bba64f95846da5a8b4a282be89e5434e718a91182"
+  },
+  "expected_images": [
+    {
+      "path": "expected.ppm",
+      "format": "ppm-ascii",
+      "sha256": "cca08f2529a6e6c3448ef9093051f2f16a47655db36ac2afd3d8495667b01ff7",
+      "role": "dependency-free placeholder golden"
+    }
+  ],
+  "expected_offscreen": [
+    {
+      "format": "png",
+      "tile_size": 256,
+      "sha256": "46ef404ec662bfc6689670ccdfe02a627a808d4617c8a1d027596d3428c66463",
+      "role": "tile-sized deterministic PNG handoff"
+    }
+  ],
+  "expected_vsg_offscreen": [
+    {
+      "format": "png",
+      "tile_size": 256,
+      "sha256": "525e907f49475b79d4ca58dfdf2038ed77a0199cd972cd86518e7765c0654be8",
+      "role": "VSG offscreen framebuffer readback PNG"
+    }
+  ],
+  "expected_vsg_interactive": [
+    {
+      "format": "txt",
+      "texture_size": 256,
+      "window_width": 256,
+      "window_height": 192,
+      "sha256": "4127734c25eea2bb498edf9e2403bd360bdf660545c93df54bc3e59a2eabd175",
+      "role": "VSG swapchain viewport sequence report"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="boy-family-template-cleanup-v2" data-canonical-asset="BOYMOR31" data-canonical-revision="boy-family-template-cleanup-v2" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_family_templates_boy_cleanup_v2/BOYMOR31.svg">
+  <title>BOYMOR31 Helm white mooring can buoy</title>
+  <desc>Clean-room Helm can-body family template; colours ['white'].</desc>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 47 L26 22 H45 L40 47 Z" fill="var(--white)" stroke="var(--black)" stroke-width="2.4"/>
+      <circle cx="32" cy="47" r="4.1" fill="var(--white)" stroke="var(--black)" stroke-width="2.1"/>
+    </g>
+</svg>

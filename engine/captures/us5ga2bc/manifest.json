@@ -1,0 +1,39 @@
+{
+  "fixture_id": "US5GA2BC",
+  "title": "Real NOAA ENC US5GA2BC filled-polygon command-stream capture (RENDERMODEL-4)",
+  "schema_version": "vulkan.render_scene.v0",
+  "scene_id": "US5GA2BC-day-standard",
+  "source_file": "source.json",
+  "scene_file": "scene.commands.json",
+  "provenance_file": "provenance.json",
+  "render_model_file": "render-model.json",
+  "render_model_binary_file": "render-model.bin",
+  "render_artifact_file": "render-artifact.json",
+  "render_artifact_binary_file": "render-artifact.bin",
+  "license": {
+    "type": "noaa-enc-public-domain",
+    "redistribution": "us-government-work",
+    "notes": "Geometry derived from NOAA ENC US5GA2BC (US public domain) via GDAL/OGR S-57."
+  },
+  "capture_matrix": [
+    {
+      "name": "day-standard-z13",
+      "palette": "day",
+      "display_category": "standard",
+      "safety_depth_m": 10.0,
+      "projection": "web_mercator_tile",
+      "tile": {
+        "z": 13,
+        "x": 2241,
+        "y": 3357
+      },
+      "pixel_size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "required_command_types": [
+    "fill_area"
+  ]
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="helm-cleanroom-artwork" data-style-contract="helm-openbridge-navigation-v1" data-candidate-revision="simplified-boy-bcn-cleanup-v2" data-witness-source="s101-shape-witness:BOYLAT14.svg" style="--black:#000000;--white:#ffffff;--red:#EA5471;--green:#52E83B;--yellow:#F4DA48;--blue:#8FB5D9;--orange:#EB7D36;--magenta:#C545C3;--grey:#7D898C;--gray:#7D898C;--brown:#B19139;--ink:#000000" data-canonical-asset="BOYLAT14" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_cleanroom/BOYLAT14.svg">
+  <title>BOYLAT14 S-101 simplified conical layout cleanup</title>
+  <g stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <defs><clipPath id="clip_BOYLAT14"><path d="M50 12 L50 51 L12 51 Z"/></clipPath></defs>
+    <rect x="12" y="12.00" width="38" height="13.08" fill="var(--red)" clip-path="url(#clip_BOYLAT14)" data-pattern="horizontal-band"/>
+    <rect x="12" y="25.00" width="38" height="13.08" fill="var(--green)" clip-path="url(#clip_BOYLAT14)" data-pattern="horizontal-band"/>
+    <rect x="12" y="38.00" width="38" height="13.08" fill="var(--red)" clip-path="url(#clip_BOYLAT14)" data-pattern="horizontal-band"/>
+    <path d="M50 12 L50 51 L12 51 Z" fill="none" stroke="var(--black)" stroke-width="3.1"/>
+    <circle cx="34" cy="36" r="2.1" fill="var(--black)" stroke="none"/>
+  </g>
+</svg>

@@ -1,0 +1,213 @@
+{
+  "fixture_id": "US5GA2BC",
+  "schema_version": "vulkan.provenance.v0",
+  "provenance_table": [
+    {
+      "provenance_id": "prov.depth_mid",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "DEPTH_MID-GROUP",
+      "source_object_class": "DEPARE",
+      "source_geometry_hash": "enc-ogr-depth_mid",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.depth_shallow",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "DEPTH_SHALLOW-GROUP",
+      "source_object_class": "DEPARE",
+      "source_geometry_hash": "enc-ogr-depth_shallow",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.dredged",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "DREDGED-GROUP",
+      "source_object_class": "DRGARE",
+      "source_geometry_hash": "enc-ogr-dredged",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.land",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "LAND-GROUP",
+      "source_object_class": "LNDARE",
+      "source_geometry_hash": "enc-ogr-land",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.depth_contour",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "DEPTH_CONTOUR-GROUP",
+      "source_object_class": "DEPCNT",
+      "source_geometry_hash": "enc-ogr-depth_contour",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.coastline",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "COASTLINE-GROUP",
+      "source_object_class": "COALNE",
+      "source_geometry_hash": "enc-ogr-coastline",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.sounding",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "SOUNDING-GROUP",
+      "source_object_class": "SOUNDG",
+      "source_geometry_hash": "enc-ogr-sounding",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.aid",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "AID-GROUP",
+      "source_object_class": "BOYLAT",
+      "source_geometry_hash": "enc-ogr-aid",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    },
+    {
+      "provenance_id": "prov.hazard",
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "source_object_id": "HAZARD-GROUP",
+      "source_object_class": "UWTROC",
+      "source_geometry_hash": "enc-ogr-hazard",
+      "conversion_stage": "enc-ogr-capture",
+      "transform_chain": [
+        "wgs84",
+        "web-mercator",
+        "target-pixels"
+      ],
+      "quilt_decision_id": "quilt.US5GA2BC.primary",
+      "target_bounds": [
+        0,
+        0,
+        2048,
+        2048
+      ],
+      "warnings": []
+    }
+  ]
+}

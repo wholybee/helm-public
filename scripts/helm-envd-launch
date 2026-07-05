@@ -1,0 +1,45 @@
+#!/bin/sh
+# helm-envd launch shim (WX-26 multi-pack).
+#
+# A weather release can contain MORE THAN ONE pack — an atmospheric pack
+# (wind/rain) plus a marine pack (current/swell/waves). helm-envd serves every
+# pack whose manifest is listed (comma-separated) in HELM_ENV_GRID_MANIFESTS, but
+# the supervised unit pins only a single stable pointer, so on its own it loads
+# just packs[0] and the marine layers 404 as "unknown_pack". This shim expands the
+# current release's EVERY pack manifest into HELM_ENV_GRID_MANIFESTS (the same
+# expansion scripts/start-helm.sh does) so all layers load, then exec's the daemon.
+#
+# It FAILS GRACEFULLY: if the release cannot be read, it leaves whatever
+# HELM_ENV_GRID_MANIFESTS the unit pre-set intact, so envd still starts and serves
+# at least that pack — never a KeepAlive/Restart thrash.
+set -eu
+
+self_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+# Packs dir: explicit override > derived from the unit's stable pointer > default.
+wx="${HELM_WX_PACKS_DIR:-}"
+if [ -z "$wx" ] && [ -n "${HELM_ENV_GRID_MANIFESTS:-}" ]; then
+  case "$HELM_ENV_GRID_MANIFESTS" in
+    */current/current.manifest.json) wx="${HELM_ENV_GRID_MANIFESTS%/current/current.manifest.json}" ;;
+  esac
+fi
+[ -z "$wx" ] && wx="$HOME/.helm/live/web/wx-packs"
+
+py="$(command -v python3 || echo /usr/bin/python3)"
+if [ -x "$py" ] && [ -f "$wx/current.json" ]; then
+  mans="$("$py" - "$wx" <<'PYEOF'
+import json, sys, pathlib
+try:
+    base = pathlib.Path(sys.argv[1])
+    cur = json.loads((base / "current.json").read_text())
+    idx = base / cur["indexUrl"]
+    rel = json.loads(idx.read_text())
+    print(",".join(str((idx.parent / p["manifestUrl"]).resolve()) for p in rel["packs"]))
+except Exception:
+    pass
+PYEOF
+)"
+  [ -n "$mans" ] && export HELM_ENV_GRID_MANIFESTS="$mans"
+fi
+
+exec "$self_dir/helm-envd" "$@"

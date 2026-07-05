@@ -1,0 +1,96 @@
+{
+  "$id": "https://helm.local/iconforge/cleanroom-symbol-registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "manifest_version": {
+      "type": "string"
+    },
+    "render_targets": {
+      "contains": {
+        "const": "OpenCPN/Vulkan"
+      },
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "helm.symbol.cleanroom-registry.v1"
+    },
+    "standards_profile": {
+      "type": "object"
+    },
+    "symbols": {
+      "items": {
+        "properties": {
+          "assets": {
+            "properties": {
+              "canonical_svg": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "palette_resolved_svg": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "canonical_svg"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "provenance": {
+            "required": [
+              "origin",
+              "implementation",
+              "generated_from",
+              "comparison_evidence"
+            ],
+            "type": "object"
+          },
+          "qa": {
+            "required": [
+              "status",
+              "semantic_review",
+              "visual_parity",
+              "runtime_eligible"
+            ],
+            "type": "object"
+          },
+          "symbol_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "assets",
+          "accessibility",
+          "qa",
+          "provenance"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "manifest_version",
+    "standards_profile",
+    "render_targets",
+    "symbols"
+  ],
+  "title": "Helm Icon Forge Clean-room Symbol Registry",
+  "type": "object"
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="boy-family-template-cleanup-v2" data-canonical-asset="BOYSPR61" data-canonical-revision="boy-family-template-cleanup-v2" style="--black:#000000;--white:#ffffff;--red:#EA5471;--green:#52E83B;--yellow:#F4DA48;--blue:#8FB5D9;--orange:#EB7D36;--magenta:#C545C3;--grey:#7D898C;--gray:#7D898C;--brown:#B19139;--ink:#000000" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_family_templates_boy_cleanup_v2/BOYSPR61.svg">
+  <title>BOYSPR61 Helm spar buoy</title>
+  <desc>Clean-room Helm spar buoy family template; colours ['green']; pattern solid.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M25 54 L35 12 H42 L35 54 Z" fill="var(--green)" stroke="var(--black)" stroke-width="2.2"/>
+      <path d="M20 54 H29 M36 54 H45" fill="none" stroke="var(--black)" stroke-width="2.2"/>
+      <circle cx="32" cy="54" r="3.8" fill="var(--white)" stroke="var(--black)" stroke-width="2.0"/>
+    </g>
+</svg>

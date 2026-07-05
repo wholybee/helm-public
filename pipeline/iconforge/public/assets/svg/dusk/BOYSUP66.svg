@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="boy-family-template-cleanup-v2-postfix" data-canonical-asset="BOYSUP66" data-canonical-revision="boy-family-template-cleanup-v2-postfix" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_family_templates_boy_cleanup_v2/BOYSUP66.svg">
+  <title>BOYSUP66 Helm super buoy</title>
+  <desc>Clean-room Helm low super-buoy family template with center post; colour replay from DB/source row.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 32 V23" fill="none" stroke="var(--black)" stroke-width="2.2"/>
+      <defs><clipPath id="clip_BOYSUP66"><path d="M18 45 L23 32 H41 L46 45 Z"/></clipPath></defs>
+      <rect x="17.00" y="32.00" width="30.00" height="6.55" fill="var(--red)" clip-path="url(#clip_BOYSUP66)" data-pattern="horizontal-band"/>
+      <rect x="17.00" y="38.50" width="30.00" height="6.55" fill="var(--white)" clip-path="url(#clip_BOYSUP66)" data-pattern="horizontal-band"/>
+      <path d="M18 45 L23 32 H41 L46 45 Z" fill="none" stroke="var(--black)" stroke-width="2.4"/>
+      <path d="M20 45 H28 M36 45 H44" fill="none" stroke="var(--black)" stroke-width="2.4"/>
+      <circle cx="32" cy="45" r="3.9" fill="var(--white)" stroke="var(--black)" stroke-width="2.0"/>
+    </g>
+</svg>

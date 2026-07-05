@@ -1,0 +1,80 @@
+name: Symbol-selection Forge smoke
+
+# Fast, dependency-free gate for the flagged Forge clean-room symbol-selection
+# render path (CHART-6/CHART-7). It proves the fixtures still match the Forge
+# runtime DB contract and stay fail-closed (runtime-blocked, never default
+# render). Kept separate from the macOS ENC fresh-clone smoke so it gives quick
+# signal: it only needs g++ and python3, plus the committed runtime DB and
+# evidence snapshot.
+
+on:
+  pull_request:
+    paths:
+      - "engine/test-symbol-selection-fixtures.sh"
+      - "engine/test-symbol-selection-db-conformance.sh"
+      - "engine/test-symbol-runtime-gate.sh"
+      - "engine/test-symbol-package-loader.sh"
+      - "engine/test-vulkan-fixture-check.sh"
+      - "engine/test-vulkan-symbol-selection-render.sh"
+      - "engine/test/fixtures/symbol-selection/**"
+      - "engine/test/fixtures/vulkan-render/**"
+      - "engine/vulkan/render_fixture.cpp"
+      - "engine/vendor/cli/**"
+      - "scripts/vulkan-render-fixture"
+      - "artifacts/opencpn_s52_portrayal.sqlite"
+      - "artifacts/opencpn_s52_portrayal.schema.sql"
+      - "pipeline/iconforge/catalog/runtime_evidence_snapshot.json"
+      - ".github/workflows/symbol-selection-smoke.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "engine/test-symbol-selection-fixtures.sh"
+      - "engine/test-symbol-selection-db-conformance.sh"
+      - "engine/test-symbol-runtime-gate.sh"
+      - "engine/test-symbol-package-loader.sh"
+      - "engine/test-vulkan-fixture-check.sh"
+      - "engine/test-vulkan-symbol-selection-render.sh"
+      - "engine/test/fixtures/symbol-selection/**"
+      - "engine/test/fixtures/vulkan-render/**"
+      - "engine/vulkan/render_fixture.cpp"
+      - "engine/vendor/cli/**"
+      - "scripts/vulkan-render-fixture"
+      - "artifacts/opencpn_s52_portrayal.sqlite"
+      - "artifacts/opencpn_s52_portrayal.schema.sql"
+      - "pipeline/iconforge/catalog/runtime_evidence_snapshot.json"
+      - ".github/workflows/symbol-selection-smoke.yml"
+  workflow_dispatch:
+
+jobs:
+  symbol-selection-smoke:
+    name: Fixtures pinned to Forge runtime DB, fail-closed
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out Helm
+        uses: actions/checkout@v4
+
+      - name: Tool versions
+        run: |
+          c++ --version
+          python3 --version
+
+      - name: Attribute fixtures match runtime evidence (CHART-6)
+        run: ./engine/test-symbol-selection-fixtures.sh
+
+      - name: Fixtures pinned to Forge runtime DB contract
+        run: ./engine/test-symbol-selection-db-conformance.sh
+
+      - name: C++ symbol-package loader stays fail-closed
+        run: ./engine/test-symbol-package-loader.sh
+
+      - name: Runtime eligibility gate blocks unapproved defaults
+        run: ./engine/test-symbol-runtime-gate.sh
+
+      - name: Vulkan render fixture checker (full corpus, BUG-1)
+        run: ./engine/test-vulkan-fixture-check.sh
+
+      - name: Flagged Forge render smoke (day/dusk/night, no witness-red)
+        run: ./engine/test-vulkan-symbol-selection-render.sh

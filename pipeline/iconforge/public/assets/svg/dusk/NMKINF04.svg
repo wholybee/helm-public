@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Pixodesk SVG (https://pixodesk.com) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="NMKINF04" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/human_approved_nmkinf/NMKINF04.svg">
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect fill="var(--blue)" stroke="var(--black)" stroke-width="1.8" rx="3" ry="0" x="10" y="10" width="44" height="44"/>
+    <path fill="none" stroke="var(--white)" stroke-width="3" transform="translate(0, 3)" d="M17,21L47,21"/>
+    <g transform="translate(45.6566, 20.4981)rotate(90)scale(1.15, 1.15)">
+      <path fill="var(--white)" fill-rule="evenodd" d="M15.1307,4.0001L12,0.3477L8.8693,4.0001L8,4.0001C6.8954,4.0001,6,4.8955,6,6.0001L6,18.0001C6,19.1047,6.8954,20.0001,8,20.0001L16,20.0001C17.1046,20.0001,18,19.1047,18,18.0001L18,6.0001C18,4.8955,17.1046,4.0001,16,4.0001L15.1307,4.0001z"/>
+      <path fill="var(--blue)" d="M13,17.0001L13,7.0001L15,7.0001L15,17.0001L13,17.0001z"/>
+      <path fill="var(--blue)" d="M9,7.0001L9,17.0001L11,17.0001L11,7.0001L9,7.0001z"/>
+    </g>
+  </g>
+</svg>

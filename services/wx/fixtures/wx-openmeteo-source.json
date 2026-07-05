@@ -1,0 +1,101 @@
+{
+  "schema": "helm.wx.pack_factory.source.v1",
+  "encoding": "helm.env.grid.v1",
+  "generatedAt": "2026-07-02T00:00:00Z",
+  "source": {
+    "provider": "open-meteo",
+    "advisoryOnly": true,
+    "notForNavigation": true,
+    "provenance": "Open-Meteo commercial API (customer hosts); baked by scripts/wx_pack_factory.py"
+  },
+  "coverage": {
+    "crs": "OGC:CRS84",
+    "global": true,
+    "bbox": [-180.0, -90.0, 180.0, 90.0],
+    "wrap": "antimeridian"
+  },
+  "tiers": {
+    "route-high": {
+      "role": "passage",
+      "crs": "OGC:CRS84",
+      "grid": { "dx": 0.25, "dy": 0.25 },
+      "anchor": { "type": "gps-route", "driftThresholdNm": 120 },
+      "clientZoomRange": [4, 10]
+    },
+    "global-low": {
+      "role": "overview",
+      "crs": "OGC:CRS84",
+      "grid": { "dx": 1.0, "dy": 1.0 },
+      "clientZoomRange": [0, 4]
+    }
+  },
+  "layers": {
+    "wind": {
+      "kind": "vector",
+      "tier": "route-high",
+      "bands": {
+        "u": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "m/s" },
+        "v": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "m/s" }
+      }
+    },
+    "gust": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "speed": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "m/s" } }
+    },
+    "rain": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "rate": { "type": "uint16", "scale": 0.1, "offset": 0.0, "nodata": 65535, "unit": "mm/h" } }
+    },
+    "temp": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "t": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "degC" } }
+    },
+    "pressure": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "msl": { "type": "uint16", "scale": 0.1, "offset": 800.0, "nodata": 65535, "unit": "hPa" } }
+    },
+    "clouds": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "cover": { "type": "uint16", "scale": 0.1, "offset": 0.0, "nodata": 65535, "unit": "%" } }
+    },
+    "cape": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "cape": { "type": "uint16", "scale": 1.0, "offset": 0.0, "nodata": 65535, "unit": "J/kg" } }
+    },
+    "waves": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "height": { "type": "uint16", "scale": 0.01, "offset": 0.0, "nodata": 65535, "unit": "m" } }
+    },
+    "swell": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "height": { "type": "uint16", "scale": 0.01, "offset": 0.0, "nodata": 65535, "unit": "m" } }
+    },
+    "sst": {
+      "kind": "scalar",
+      "tier": "route-high",
+      "bands": { "t": { "type": "int16", "scale": 0.01, "offset": 0.0, "nodata": -32768, "unit": "degC" } }
+    },
+    "current": {
+      "kind": "vector",
+      "tier": "route-high",
+      "bands": {
+        "u": { "type": "int16", "scale": 0.001, "offset": 0.0, "nodata": -32768, "unit": "m/s" },
+        "v": { "type": "int16", "scale": 0.001, "offset": 0.0, "nodata": -32768, "unit": "m/s" }
+      }
+    }
+  },
+  "renderContract": {
+    "webgpu": "preferred",
+    "alpha": "premultiplied",
+    "timeInterpolation": "value-lerp-before-colorization",
+    "unsupportedCapability": "fail-loud"
+  }
+}

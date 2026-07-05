@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="150" height="150" role="img"
+  data-origin="helm-cleanroom-artwork" data-style-contract="helm-openbridge-navigation-v1"
+  data-cleanroom-revision="helm-cleanroom-topmarks-v1" data-cleanroom-generator="semantic-topmark-primitives"
+  data-cleanroom-source="db-topmark-shape-code" data-cleanroom-shape-code="27"
+  data-s101-witness="TOPMAR86" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="TOPSHQ27" data-canonical-revision="canonical-by-asset-v1" data-canonical-source="assets/svg/helm_cleanroom/TOPSHQ27.svg" data-helm-proof-render="helm-resolved-attributes" data-helm-preview-colour="red" data-helm-preview-source="canonical-art-plus-db-row-attributes">
+  <title>TOPSHQ27 clean-room topmark</title>
+  <desc>Helm clean-room primitive for TOPSHP shape 27: two upright crosses (one over the other). S-101/OpenCPN art is witness evidence only.</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <path d="M22.25 23 L41.75 23" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M32 13.25 L32 32.75" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22.25 43 L41.75 43" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M32 33.25 L32 52.75" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

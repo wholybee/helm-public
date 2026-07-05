@@ -1,0 +1,84 @@
+{
+  "fixture_id": "US5GA2BC",
+  "source_epoch": "US5GA2BC@enc",
+  "source_type": "enc_s57",
+  "charts": [
+    {
+      "source_chart_id": "US5GA2BC",
+      "source_chart_edition": "1",
+      "source_update": "0",
+      "native_scale": 20000,
+      "bounds": {
+        "west": -81.5265,
+        "south": 30.8235,
+        "east": -81.4485,
+        "north": 30.9015
+      },
+      "objects": [
+        {
+          "source_object_id": "DEPTH_MID-GROUP",
+          "source_object_class": "DEPARE",
+          "geometry_type": "polygon",
+          "feature_count": 15,
+          "convex_ring_count": 145
+        },
+        {
+          "source_object_id": "DEPTH_SHALLOW-GROUP",
+          "source_object_class": "DEPARE",
+          "geometry_type": "polygon",
+          "feature_count": 165,
+          "convex_ring_count": 5282
+        },
+        {
+          "source_object_id": "DREDGED-GROUP",
+          "source_object_class": "DRGARE",
+          "geometry_type": "polygon",
+          "feature_count": 2,
+          "convex_ring_count": 36
+        },
+        {
+          "source_object_id": "LAND-GROUP",
+          "source_object_class": "LNDARE",
+          "geometry_type": "polygon",
+          "feature_count": 90,
+          "convex_ring_count": 2574
+        },
+        {
+          "source_object_id": "DEPTH_CONTOUR-GROUP",
+          "source_object_class": "DEPCNT",
+          "geometry_type": "line",
+          "feature_count": 179,
+          "convex_ring_count": 1347
+        },
+        {
+          "source_object_id": "COASTLINE-GROUP",
+          "source_object_class": "COALNE",
+          "geometry_type": "line",
+          "feature_count": 136,
+          "convex_ring_count": 2762
+        },
+        {
+          "source_object_id": "SOUNDING-GROUP",
+          "source_object_class": "SOUNDG",
+          "geometry_type": "point",
+          "feature_count": 250,
+          "convex_ring_count": 250
+        },
+        {
+          "source_object_id": "AID-GROUP",
+          "source_object_class": "BOYLAT",
+          "geometry_type": "point",
+          "feature_count": 47,
+          "convex_ring_count": 47
+        },
+        {
+          "source_object_id": "HAZARD-GROUP",
+          "source_object_class": "UWTROC",
+          "geometry_type": "point",
+          "feature_count": 2,
+          "convex_ring_count": 2
+        }
+      ]
+    }
+  ]
+}

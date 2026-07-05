@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="150" height="150" role="img"
+  data-origin="helm-cleanroom-artwork" data-style-contract="helm-openbridge-navigation-v1"
+  data-cleanroom-revision="helm-cleanroom-topmarks-v1" data-cleanroom-generator="semantic-topmark-primitives"
+  data-cleanroom-source="db-topmark-shape-code" data-cleanroom-shape-code="12"
+  data-s101-witness="TOPMAR14" style="--black:#050505;--white:#b9b0a1;--red:#8f3338;--green:#3f7c43;--yellow:#8c7a34;--blue:#455e76;--orange:#7f4a2b;--magenta:#6c3f6e;--grey:#4e5452;--gray:#4e5452;--brown:#66502f;--ink:#050505" data-canonical-asset="TOPSHP52" data-canonical-revision="canonical-by-asset-v1" data-canonical-source="assets/svg/helm_cleanroom/TOPSHP52.svg" data-helm-proof-render="helm-resolved-attributes" data-helm-preview-colour="black" data-helm-preview-source="canonical-art-plus-db-row-attributes">
+  <title>TOPSHP52 clean-room topmark</title>
+  <desc>Helm clean-room primitive for TOPSHP shape 12: rhombus. S-101/OpenCPN art is witness evidence only.</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <path d="M32 19 L45 32 L32 45 L19 32 Z" fill="var(--black)" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

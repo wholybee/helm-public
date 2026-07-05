@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Pixodesk SVG (https://pixodesk.com) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" data-canonical-asset="NMKINF22" data-canonical-revision="canonical-by-asset-v1" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/human_approved_nmkinf/NMKINF22.svg">
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect fill="var(--blue)" stroke="var(--black)" stroke-width="1.8" rx="3" ry="0" x="10" y="10" width="44" height="44"/>
+  </g>
+  <rect fill="var(--white)" fill-opacity="0.01" transform="translate(26.5556, 26.083)scale(0.8, 0.8)" width="48" height="48"/>
+  <path fill="var(--blue)" stroke="var(--white)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="translate(13.2686, 13.5105)scale(0.8, 0.8)" d="M11.2721,36.7279C14.5294,39.9853,19.0294,42,24,42C33.941,42,42,33.941,42,24C42,14.0589,33.941,6,24,6C19.0294,6,14.5294,8.0148,11.2721,11.2721C9.6141,12.93,6,17,6,17"/>
+  <path fill="var(--white)" stroke="var(--white)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="translate(13.2686, 13.5105)scale(0.8, 0.8)" d="M6,9L6,17L14,17"/>
+</svg>

@@ -1,0 +1,63 @@
+name: FALLBACK-1 render fallback proof
+
+# Regression bridge for the chart render fallback (FALLBACK-1). Dependency-free gate:
+# it proves the committed chart fixture renders to a byte-for-byte deterministic PNG
+# (== golden), the fixture corpus + cache-key policy are intact, and the live-route
+# fallback CONTRACT logic is sound (fallback1-assert --selftest exercises the pass path
+# plus tampered cases such as a silent fallback). The live helm-server leg is best-effort
+# and records an explicit skip when no S-52 server is present, so this stays green in CI
+# while still failing loudly on a real regression.
+
+on:
+  pull_request:
+    paths:
+      - "scripts/fallback-1-proof.sh"
+      - "scripts/fallback1-assert.py"
+      - "scripts/vulkan-render-fixture"
+      - "scripts/render-artifact-compile"
+      - "scripts/render-artifact-cache-smoke"
+      - "engine/vulkan/render_fixture.cpp"
+      - "engine/test/fixtures/vulkan-render/chart-1/**"
+      - ".github/workflows/fallback-1-proof.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fallback-1-proof.sh"
+      - "scripts/fallback1-assert.py"
+      - "scripts/vulkan-render-fixture"
+      - "scripts/render-artifact-compile"
+      - "scripts/render-artifact-cache-smoke"
+      - "engine/vulkan/render_fixture.cpp"
+      - "engine/test/fixtures/vulkan-render/chart-1/**"
+      - ".github/workflows/fallback-1-proof.yml"
+  workflow_dispatch:
+
+jobs:
+  fallback-1-proof:
+    name: Deterministic fixture PNG + fallback contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out Helm
+        uses: actions/checkout@v4
+
+      - name: Tool versions
+        run: |
+          c++ --version
+          python3 --version
+
+      - name: Fallback contract selftest (pass + tampered cases)
+        run: python3 scripts/fallback1-assert.py --selftest
+
+      - name: FALLBACK-1 proof (native deterministic PNG; server leg best-effort)
+        run: ./scripts/fallback-1-proof.sh
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fallback-1-evidence
+          path: test-results/fallback-1/
+          if-no-files-found: ignore

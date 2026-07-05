@@ -1,0 +1,58 @@
+# Backend test suite (CLIENT epic · follow-up to CLIENT-28).
+# The optional :8090 Python AI-advisory service (backend/) shipped 4 test files that no
+# workflow ran, so backend/ changes merged with zero automated coverage. This runs them on
+# every backend/** change.
+#
+# The whole suite runs OFFLINE on purpose: it exercises the service's deterministic
+# "optional / offline-first" floor and never depends on a third-party API.
+#   - the unittest trio (probe-contract, AI guardrails, S-100 spike) inject fake weather /
+#     use fixtures — no network at all.
+#   - test_smoke.py drives the in-process FastAPI app; get_weather()'s Open-Meteo calls hit
+#     their try/except fallback, so structure is asserted without live values (exactly what
+#     its docstring promises: "passes offline / behind a restrictive proxy"). Live-value
+#     checks are explicitly out of scope for this floor (see backend/README.md).
+name: backend-tests
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-tests.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The two interpreters backend/README.md verifies. 3.9 is the floor and guards the
+        # Python-3.9 typing contract (typing.Optional over `X | None`); 3.13 is forward-cover.
+        python-version: ['3.9', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install backend deps
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run backend tests (forced offline — deterministic floor)
+        working-directory: backend
+        # Point httpx at a dead proxy (127.0.0.1:9 refuses instantly) so get_weather()'s
+        # Open-Meteo calls fail fast into their fallback instead of making CI depend on
+        # api.open-meteo.com uptime or hammering it on every PR. The unittest trio ignores
+        # this (it injects fakes); test_smoke.py needs it to stay deterministic.
+        env:
+          HTTP_PROXY: http://127.0.0.1:9
+          HTTPS_PROXY: http://127.0.0.1:9
+          ALL_PROXY: http://127.0.0.1:9
+        run: |
+          python -m unittest test_ai_guardrails test_probe_contract test_s100_spike -v
+          python test_smoke.py

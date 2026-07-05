@@ -1,0 +1,63 @@
+{
+  "schema_version": "helm.inspect.trace.v1",
+  "trace_id": "inspect.chart-1.raster.pixel-2-2",
+  "pick": {
+    "pixel": [2, 2],
+    "device_pixel_ratio": 1,
+    "viewport_id": "fixture.chart-1.day-standard-z12",
+    "backend": "cpu-reference",
+    "scene_id": "chart-1-day-standard-z12",
+    "model_id": "model.chart-1.day-standard-z12"
+  },
+  "resolution": {
+    "kind": "raster_fallback",
+    "feature_metadata_available": false
+  },
+  "draw_record": {
+    "draw_record_id": "draw.chart-1.cmd.raster.debug-collar",
+    "command_id": "cmd.raster.debug-collar",
+    "command_type": "draw_raster_sheet",
+    "primitive_id": "prim.raster.debug-collar",
+    "primitive_kind": "RasterPatch",
+    "artifact_id": "artifact.chart-1.tile-256",
+    "layer_id": "layer.background-raster",
+    "provenance_refs": [
+      "prov.raster.debug-collar"
+    ]
+  },
+  "presentation": {
+    "presentation_authority": "fixture",
+    "presentation_rule_id": "rule.RASTER.DEBUG",
+    "material_id": "mat.raster.debug-collar",
+    "style_key": "raster.debug-collar",
+    "conversion_stage": "synthetic-raster-sheet"
+  },
+  "source": {
+    "source_chart_id": "SYNTH-CHART-1",
+    "source_chart_edition": "1",
+    "source_update": "0",
+    "source_feature_id": null,
+    "source_feature_sub_id": null,
+    "object_class": "RASTER",
+    "attributes": [],
+    "source_geometry_hash": "synthetic-raster-full-tile",
+    "transform_chain": [
+      "fixture-raster-pixels",
+      "target-pixels"
+    ],
+    "quilt_decision_id": "quilt.synthetic.full-tile"
+  },
+  "raster_fallback": {
+    "active": true,
+    "reason": "raster_debug_placeholder",
+    "message": "Debug raster is a placeholder, not a chart image. Raster pixels have no per-feature metadata; object inspection is unavailable unless a sidecar metadata layer is present.",
+    "sidecar_metadata_available": false,
+    "sidecar_name": null
+  },
+  "inspection_handles": [
+    "inspect.raster.debug-collar"
+  ],
+  "warnings": [
+    "debug raster is a placeholder, not a chart image"
+  ]
+}

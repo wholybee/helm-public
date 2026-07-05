@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="targeted-buoy-cleanup-v1" data-canonical-asset="BOYGEN03" data-canonical-revision="targeted-buoy-cleanup-v1" style="--black:#000000;--white:#ffffff;--red:#EA5471;--green:#52E83B;--yellow:#F4DA48;--blue:#8FB5D9;--orange:#EB7D36;--magenta:#C545C3;--grey:#7D898C;--gray:#7D898C;--brown:#B19139;--ink:#000000" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_buoy_targeted_cleanup_v1/BOYGEN03.svg">
+  <title>BOYGEN03 Helm general buoy</title>
+  <desc>Clean-room Helm redraw from S-101/OpenCPN witness: general buoy line art with magenta question mark.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <circle cx="24" cy="30" r="10.2" fill="var(--white)" stroke="var(--black)" stroke-width="3.2"/>
+    <circle cx="24" cy="46" r="4.0" fill="var(--white)" stroke="var(--black)" stroke-width="3.0"/>
+    <path d="M9 46 H20 M28 46 H40" fill="none" stroke="var(--black)" stroke-width="3.2"/>
+    <text x="50" y="41" text-anchor="middle" font-size="33" font-family="Arial, Helvetica, sans-serif" font-weight="500" fill="var(--magenta)" stroke="none">?</text>
+    <path d="M45 50 H55" fill="none" stroke="var(--magenta)" stroke-width="4.0"/>
+  </g>
+</svg>

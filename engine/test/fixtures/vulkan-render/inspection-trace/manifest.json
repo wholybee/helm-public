@@ -1,0 +1,17 @@
+{
+  "fixture_id": "inspection-trace",
+  "title": "Source-to-pixel inspection trace contract fixtures",
+  "schema_version": "helm.inspect.trace.v1",
+  "trace_dir": "traces",
+  "source_fixture": "../chart-1",
+  "required_resolution_kinds": [
+    "vector_feature",
+    "raster_fallback",
+    "no_hit"
+  ],
+  "license": {
+    "type": "synthetic",
+    "redistribution": "repo-owned",
+    "notes": "Trace examples derive from chart-1 synthetic command/provenance fixtures."
+  }
+}

@@ -1,0 +1,75 @@
+name: HELMC++ runtime guard
+
+on:
+  push:
+    paths:
+      - "docs/runtime-inventory.json"
+      - "docs/helmcxx-parity-suite.json"
+      - "docs/HELMCXX-ACCEPTANCE.md"
+      - "docs/HELMCXX-MAINTAINABILITY.md"
+      - "docs/HELMCXX-PACKAGING.md"
+      - "docs/RUNTIME-SERVICES.md"
+      - "backend/**/*.py"
+      - "packaging/**"
+      - "scripts/check-runtime-inventory.py"
+      - "scripts/helmcxx-parity-suite.py"
+      - "scripts/helmcxx-no-python-runtime.sh"
+      - "scripts/helmcxx-cockpit-proof.sh"
+      - "scripts/helmcxx-benchmark-soak.mjs"
+      - "scripts/helmcxx-maintainability-audit.mjs"
+      - "scripts/helmcxx-packaging-proof.sh"
+      - "scripts/install-helmcxx-runtime.sh"
+      - "scripts/helmcxx-make-envd-fixture.mjs"
+      - "web/test/e2e/helmcxx4-cockpit.spec.js"
+      - ".github/workflows/helmcxx-runtime-guard.yml"
+  pull_request:
+    paths:
+      - "docs/runtime-inventory.json"
+      - "docs/helmcxx-parity-suite.json"
+      - "docs/HELMCXX-ACCEPTANCE.md"
+      - "docs/HELMCXX-MAINTAINABILITY.md"
+      - "docs/HELMCXX-PACKAGING.md"
+      - "docs/RUNTIME-SERVICES.md"
+      - "backend/**/*.py"
+      - "packaging/**"
+      - "scripts/check-runtime-inventory.py"
+      - "scripts/helmcxx-parity-suite.py"
+      - "scripts/helmcxx-no-python-runtime.sh"
+      - "scripts/helmcxx-cockpit-proof.sh"
+      - "scripts/helmcxx-benchmark-soak.mjs"
+      - "scripts/helmcxx-maintainability-audit.mjs"
+      - "scripts/helmcxx-packaging-proof.sh"
+      - "scripts/install-helmcxx-runtime.sh"
+      - "scripts/helmcxx-make-envd-fixture.mjs"
+      - "web/test/e2e/helmcxx4-cockpit.spec.js"
+      - ".github/workflows/helmcxx-runtime-guard.yml"
+  workflow_dispatch:
+
+jobs:
+  runtime-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check runtime inventory
+        run: python3 scripts/check-runtime-inventory.py
+      - name: Check runtime inventory negative smoke
+        run: python3 scripts/check-runtime-inventory.py --negative-smoke-backend-python
+      - name: Check HELMC++ parity suite
+        run: python3 scripts/helmcxx-parity-suite.py
+      - name: Check HELMC++ no-Python harness syntax
+        run: |
+          bash -n scripts/helmcxx-no-python-runtime.sh
+          bash -n scripts/helmcxx-cockpit-proof.sh
+          bash -n scripts/install-helmcxx-runtime.sh
+          bash -n scripts/helmcxx-packaging-proof.sh
+          node --check scripts/helmcxx-make-envd-fixture.mjs
+          node --check scripts/helmcxx-benchmark-soak.mjs
+          node --check scripts/helmcxx-maintainability-audit.mjs
+          node --check web/test/e2e/helmcxx4-cockpit.spec.js
+      - name: Check HELMC++ maintainability audit
+        run: scripts/helmcxx-maintainability-audit.mjs
+      - name: Check HELMC++ packaging proof
+        run: scripts/helmcxx-packaging-proof.sh

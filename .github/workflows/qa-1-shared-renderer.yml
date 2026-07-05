@@ -1,0 +1,67 @@
+name: QA-1 shared renderer regression
+
+# CI-safe native + semantic regression for the shared renderer path (Vulkan fixture,
+# artifact compiler, scheduler unit tests). Browser and helm-server legs stay opt-in
+# via scripts/qa-1-shared-renderer-proof.sh (HELM_QA1=1, HELM_QA1_BROWSER=1).
+
+on:
+  pull_request:
+    paths:
+      - "engine/test-qa-1-shared-renderer.sh"
+      - "engine/test-qa-1-server-png.sh"
+      - "engine/test/fixtures/vulkan-render/**"
+      - "engine/test/fixtures/viewport-scheduler/**"
+      - "pipeline/test_viewport_scheduler.py"
+      - "scripts/qa-1-shared-renderer-proof.sh"
+      - "scripts/vulkan-render-fixture"
+      - "scripts/render-artifact-*"
+      - "scripts/viewport-scheduler-*"
+      - "scripts/inspection-trace-smoke"
+      - "web/chart-*.js"
+      - "web/data/render-artifact-chart-1.json"
+      - "web/tests/chart-*.test.js"
+      - "web/test/chart-artifact-*.test.cjs"
+      - "web/test/e2e/qa-1-shared-renderer.spec.js"
+      - ".github/workflows/qa-1-shared-renderer.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "engine/test-qa-1-shared-renderer.sh"
+      - "engine/test-qa-1-server-png.sh"
+      - "engine/test/fixtures/vulkan-render/**"
+      - "engine/test/fixtures/viewport-scheduler/**"
+      - "pipeline/test_viewport_scheduler.py"
+      - "scripts/qa-1-shared-renderer-proof.sh"
+      - "scripts/vulkan-render-fixture"
+      - "scripts/render-artifact-*"
+      - "scripts/viewport-scheduler-*"
+      - "scripts/inspection-trace-smoke"
+      - "web/chart-*.js"
+      - "web/data/render-artifact-chart-1.json"
+      - "web/tests/chart-*.test.js"
+      - "web/test/chart-artifact-*.test.cjs"
+      - "web/test/e2e/qa-1-shared-renderer.spec.js"
+      - ".github/workflows/qa-1-shared-renderer.yml"
+  workflow_dispatch:
+
+jobs:
+  qa-1-native:
+    name: Native fixture + semantic regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out Helm
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Tool versions
+        run: |
+          python3 --version
+          node --version
+
+      - name: QA-1 native leg (CI-safe)
+        run: bash engine/test-qa-1-shared-renderer.sh

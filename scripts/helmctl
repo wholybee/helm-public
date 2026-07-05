@@ -1,0 +1,103 @@
+#!/bin/sh
+# helmctl — one control for the whole Helm runtime stack.
+#
+# Installed to <prefix>/bin/helmctl. It wraps the OS supervision (launchd on
+# macOS / systemd on Linux) the installer generated, so you manage all daemons
+# with one command instead of touching each unit:
+#
+#   helmctl start | stop | restart | status
+#
+# Reboot-persistence still comes from the units themselves (RunAtLoad / enabled);
+# this is the human-facing control surface over them. Layout comes from
+# <prefix>/etc/helmctl.env, written by scripts/install-helmcxx-runtime.sh.
+set -eu
+
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+ENV_FILE="$SELF_DIR/../etc/helmctl.env"
+[ -f "$ENV_FILE" ] || { echo "helmctl: missing $ENV_FILE — re-run scripts/install-helmcxx-runtime.sh" >&2; exit 1; }
+# shellcheck disable=SC1090
+. "$ENV_FILE"
+
+LP="${HELM_LABEL_PREFIX:-com.6thelement}"
+OS="${HELM_OS:-$(uname -s)}"
+MODE="${HELM_MODE:-user}"
+DAEMONS="helm-server helm-packd helm-basemap-cache helm-envd"
+PORTS="8080 8091 8095 8094"   # order matches DAEMONS: server packd basemap-cache envd
+
+domain() { [ "$MODE" = system ] && echo system || echo "gui/$(id -u)"; }
+agents_dir() {
+  if [ "$OS" = Darwin ]; then
+    [ "$MODE" = system ] && echo /Library/LaunchDaemons || echo "$HOME/Library/LaunchAgents"
+  else
+    [ "$MODE" = system ] && echo /etc/systemd/system || echo "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
+  fi
+}
+sc() { if [ "$MODE" = system ]; then systemctl "$@"; else systemctl --user "$@"; fi; }
+
+start_stack() {
+  if [ "$OS" = Darwin ]; then
+    dom="$(domain)"; dir="$(agents_dir)"
+    for u in $DAEMONS ${HELM_HAS_WX:+helm-wx-refresh}; do
+      launchctl bootstrap "$dom" "$dir/$LP.$u.plist" 2>/dev/null \
+        || launchctl kickstart "$dom/$LP.$u" 2>/dev/null || true
+    done
+  else
+    sc daemon-reload
+    for u in $DAEMONS; do sc enable --now "$u.service"; done
+    [ -n "${HELM_HAS_WX:-}" ] && sc enable --now helm-wx-refresh.timer || true
+  fi
+  echo "helm: started ($MODE)"
+}
+
+stop_stack() {
+  if [ "$OS" = Darwin ]; then
+    dom="$(domain)"
+    for u in $DAEMONS ${HELM_HAS_WX:+helm-wx-refresh}; do launchctl bootout "$dom/$LP.$u" 2>/dev/null || true; done
+  else
+    for u in $DAEMONS; do sc disable --now "$u.service" 2>/dev/null || true; done
+    [ -n "${HELM_HAS_WX:-}" ] && sc disable --now helm-wx-refresh.timer 2>/dev/null || true
+  fi
+  echo "helm: stopped"
+}
+
+restart_stack() {
+  if [ "$OS" = Darwin ]; then
+    dom="$(domain)"
+    for u in $DAEMONS; do launchctl kickstart -k "$dom/$LP.$u" 2>/dev/null || true; done
+    [ -n "${HELM_HAS_WX:-}" ] && launchctl kickstart -k "$dom/$LP.helm-wx-refresh" 2>/dev/null || true
+  else
+    for u in $DAEMONS; do sc restart "$u.service" 2>/dev/null || true; done
+  fi
+  echo "helm: restarted"
+}
+
+status_stack() {
+  echo "helm runtime ($MODE / $([ "$OS" = Darwin ] && echo launchd || echo systemd)):"
+  set -- $PORTS
+  for u in $DAEMONS; do
+    port="$1"; shift
+    code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 "http://127.0.0.1:$port/health" 2>/dev/null || echo 000)
+    if [ "$OS" = Darwin ]; then
+      pid=$(launchctl list 2>/dev/null | awk -v l="$LP.$u" '$3==l{print $1}')
+    else
+      pid=$(sc show "$u.service" -p MainPID --value 2>/dev/null || echo -)
+    fi
+    [ "$code" = 200 ] && st=up || st="DOWN"
+    printf '  %-20s :%s  %-4s  pid=%s\n' "$u" "$port" "$st" "${pid:--}"
+  done
+  if [ -n "${HELM_HAS_WX:-}" ]; then
+    if [ "$OS" = Darwin ]; then
+      printf '  %-20s scheduled bake (launchd StartInterval)\n' "helm-wx-refresh"
+    else
+      printf '  %-20s %s\n' "helm-wx-refresh.timer" "$(sc is-active helm-wx-refresh.timer 2>/dev/null || echo inactive)"
+    fi
+  fi
+}
+
+case "${1:-status}" in
+  start) start_stack ;;
+  stop) stop_stack ;;
+  restart) restart_stack ;;
+  status) status_stack ;;
+  *) echo "usage: helmctl {start|stop|restart|status}" >&2; exit 2 ;;
+esac

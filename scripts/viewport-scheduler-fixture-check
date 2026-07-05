@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PY="${PYTHON:-python3}"
+
+if [ "$#" -lt 1 ]; then
+  echo "usage: $0 <fixture-dir> [--print-hashes]" >&2
+  exit 2
+fi
+
+FIXTURE_DIR="$1"
+shift
+
+exec "$PY" - "$FIXTURE_DIR" "$@" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+fixture_dir = Path(sys.argv[1])
+ROOT = fixture_dir.parents[4]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from viewport_scheduler import build_schedule_response, sha256_json
+
+print_hashes = "--print-hashes" in sys.argv[2:]
+
+request = json.loads((fixture_dir / "request.json").read_text(encoding="utf-8"))
+expected = json.loads((fixture_dir / "response.json").read_text(encoding="utf-8"))
+manifest = json.loads((fixture_dir / "manifest.json").read_text(encoding="utf-8"))
+
+response = build_schedule_response(request, source_epoch=manifest["source_epoch"])
+if response != expected:
+    raise SystemExit(f"fixture mismatch: {fixture_dir}")
+
+request_hash = sha256_json(request)
+response_hash = sha256_json(response)
+expected_request = manifest["expected_hashes"]["request_json_sha256"]
+expected_response = manifest["expected_hashes"]["response_json_sha256"]
+if request_hash != expected_request or response_hash != expected_response:
+    raise SystemExit(
+        "hash mismatch: "
+        f"request={request_hash} expected={expected_request}; "
+        f"response={response_hash} expected={expected_response}"
+    )
+
+if print_hashes:
+    print(f"request_json_sha256={request_hash}")
+    print(f"response_json_sha256={response_hash}")
+
+print(f"ok entries={response['totals']['entries']} visible={response['totals']['visible']} overscan={response['totals']['overscan']}")
+PY

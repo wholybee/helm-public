@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" data-origin="generated-owned-artwork" data-style-contract="helm-openbridge-navigation-v1" data-repair-batch="non-boy-bcn-s101-batch1-v1" data-canonical-asset="CHKSYM01" data-canonical-revision="non-boy-bcn-s101-batch1-v1" style="--black:#14120f;--white:#d7d2c5;--red:#d65550;--green:#63b565;--yellow:#d3b84a;--blue:#7695ab;--orange:#c9793c;--magenta:#a959a0;--grey:#777b78;--gray:#777b78;--brown:#9a7c3d;--ink:#14120f" width="150" height="150" data-helm-proof-render="helm-canonical-art" data-helm-preview-source="canonical-art" data-canonical-source="assets/svg/helm_non_boy_bcn_s101_batch1_v1/CHKSYM01.svg">
+  <title>CHKSYM01 Helm check symbol</title>
+  <desc>S-101/OpenCPN-style black square check symbol.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+    <rect x="17" y="17" width="30" height="30" rx="2" fill="var(--black)" stroke="var(--black)" stroke-width="2.0"/>
+  </g>
+</svg>

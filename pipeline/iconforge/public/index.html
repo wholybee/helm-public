@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Helm Clean-room Symbol Catalog</title>
+  <meta name="description" content="Public catalog of Helm-owned clean-room maritime chart symbols with S-52/S-57/S-101 provenance, day/dusk/night palettes, and review state.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%9A%93%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/vendor/tabler.min.css">
+  <style>
+    body { -webkit-font-smoothing: antialiased; }
+    .trip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .sw { height: 82px; display: grid; place-items: center; border-radius: 6px; border: 1px solid var(--tblr-border-color); overflow: hidden; background: #fff; }
+    .sw img { width: 68px; height: 68px; object-fit: contain; }
+    .sw .empty { font-size: 9px; color: var(--tblr-secondary); }
+    .card-icon { display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--tblr-border-color); overflow: hidden; background: #fff; }
+    .card-icon img { width: 90%; height: 90%; object-fit: contain; }
+    .sym-card { cursor: pointer; height: 100%; }
+    .sym-card:hover { border-color: var(--tblr-primary); box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+    .sym-id { font-family: var(--tblr-font-monospace); font-size: 12px; }
+    .toolbar-sticky { position: sticky; top: 0; z-index: 20; }
+    .strip { display: flex; gap: 10px; flex-wrap: wrap; }
+    .strip .cell { text-align: center; }
+    .strip .box { width: 116px; height: 116px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--tblr-border-color); background: #fff; }
+    .strip .box img { width: 100px; height: 100px; object-fit: contain; }
+    /* Local comparison panels for evidence review. */
+    .cmp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .cmp-box { aspect-ratio: 1 / 1; background: #fff; border: 1px solid var(--tblr-border-color); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+    .cmp-box img { width: 90%; height: 90%; object-fit: contain; }
+    .cmp-label { font-weight: 600; text-align: center; margin-top: 4px; font-size: 13px; }
+    .cmp-panel.cmp-s101 .cmp-box { border-color: var(--tblr-yellow); box-shadow: 0 0 0 2px var(--tblr-yellow-lt); }
+    .cmp-panel .cmp-na { display: none; text-align: center; padding: 8px; color: var(--tblr-secondary); font-size: 12px; }
+    .cmp-panel.cmp-missing .cmp-box { display: none; }
+    .cmp-panel.cmp-missing .cmp-na { display: block; }
+    .review-dock { position: fixed; right: 16px; bottom: 16px; z-index: 1045; }
+    .offcanvas-wide { --tblr-offcanvas-width: min(720px, 96vw); }
+    .authority { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="navbar navbar-expand-md navbar-light d-print-none">
+    <div class="container-xl">
+      <div class="navbar-brand fs-3 d-flex align-items-center gap-2"><span aria-hidden="true">⚓</span><span>Helm Clean-room Symbol Catalog</span></div>
+      <div class="navbar-nav flex-row order-md-last align-items-center">
+        <div class="nav-item d-none d-md-flex me-2"><div class="btn-list">
+          <a href="registry/symbols.json" class="btn btn-sm btn-outline-secondary" download>Registry JSON</a>
+          <a href="proof/coverage.json" class="btn btn-sm btn-outline-secondary">Coverage</a>
+          <a href="proof/SOURCE-BOUNDARY.md" class="btn btn-sm btn-outline-secondary">Source boundary</a>
+        </div></div>
+        <button class="btn btn-icon btn-sm" id="themeToggle" title="Toggle light / dark" aria-label="Toggle theme">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+    <div class="page-header d-print-none"><div class="container-xl">
+      <h2 class="page-title">Generated maritime chart symbols — clean-room, provenance-first</h2>
+      <div class="text-secondary mt-1">Helm-owned SVG symbols with S-52/S-57/S-101 evidence and review state. OpenCPN renders are a comparison target only, never bundled as Helm artwork. Runtime use is view-only and fail-closed.</div>
+      <div class="row row-deck row-cards mt-2" id="stats"></div>
+    </div></div>
+
+    <div class="page-body"><div class="container-xl">
+      <div id="alert"></div>
+      <div class="card toolbar-sticky mb-3"><div class="card-body py-2">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-lg"><input id="q" type="search" class="form-control" placeholder="Search symbol id, name, S-57 object class, S-52 ref, S-101 rule…" autocomplete="off"></div>
+          <div class="col-6 col-md-4 col-lg-3"><select id="family" class="form-select"><option value="">All families</option></select></div>
+          <div class="col-6 col-md-4 col-lg-2"><select id="geometry" class="form-select"><option value="">All geometry</option></select></div>
+          <div class="col-6 col-md-4 col-lg-2"><select id="gate" class="form-select"><option value="">All proof gates</option><option value="green">Proof: green</option><option value="yellow">Proof: yellow</option><option value="red">Proof: red</option></select></div>
+          <div class="col text-secondary text-end" id="count">—</div>
+        </div>
+      </div></div>
+      <div id="grid" class="row row-cards"></div>
+      <div class="d-flex justify-content-center mt-3"><ul class="pagination" id="pager"></ul></div>
+    </div></div>
+
+    <footer class="footer footer-transparent d-print-none"><div class="container-xl">
+      <div class="row text-secondary align-items-center">
+        <div class="col">Clean-room public review surface · owner final signoff recorded; runtime release remains fail-closed until the FORGE-47 runtime/QA gates pass. Not an ECDIS certification claim.</div>
+        <div class="col-auto"><span id="schemaTag" class="text-secondary small"></span></div>
+      </div>
+    </div></footer>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end offcanvas-wide" tabindex="-1" id="detail" aria-labelledby="detailTitle">
+  <div class="offcanvas-header"><div><h2 class="offcanvas-title" id="detailTitle">Symbol</h2><div class="text-secondary sym-id" id="detailKey"></div></div>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+  <div class="offcanvas-body" id="detailBody"></div>
+</div>
+
+<div class="offcanvas offcanvas-end offcanvas-wide" tabindex="-1" id="feedbackDashboard" aria-labelledby="feedbackDashboardTitle">
+  <div class="offcanvas-header"><div><h2 class="offcanvas-title" id="feedbackDashboardTitle">Feedback Dashboard</h2><div class="text-secondary">Browser-local decisions ready to export or file as a GitHub issue.</div></div>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+  <div class="offcanvas-body" id="feedbackDashboardBody"></div>
+</div>
+
+<div class="review-dock" id="reviewDock" hidden>
+  <div class="dropdown dropup">
+    <button class="btn btn-primary shadow" data-bs-toggle="dropdown" aria-expanded="false"><span id="reviewCount">0</span> review decisions</button>
+    <div class="dropdown-menu dropdown-menu-end p-2" style="min-width: 240px">
+      <button class="dropdown-item" id="openFeedbackDashboard">Feedback dashboard</button>
+      <button class="dropdown-item" id="exportJson">⬇︎ Download decisions JSON</button>
+      <a class="dropdown-item" id="openIssue" target="_blank" rel="noopener">↗ Open GitHub review issue</a>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item text-danger" id="clearReviews">Clear decisions</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/vendor/tabler.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
