@@ -126,8 +126,11 @@ void EnsureHeadlessGlobals();
 // hardcoded transient paths were wiped on every reboot, which made cold-starting impossible.
 // Override with HELM_S57_DATA (the s57data dir) / HELM_SENC_DIR (the regenerable SENC cache).
 static std::string helm_home_dir() {
-  const char* home = std::getenv("HOME");
-  return home && *home ? home : ".";
+  if (const char* home = std::getenv("HOME")) if (*home) return home;
+#ifdef _WIN32
+  if (const char* up = std::getenv("USERPROFILE")) if (*up) return up;  // HOME is usually unset on native Windows
+#endif
+  return ".";
 }
 
 static std::string helm_runtime_path(const std::string& rel) {
@@ -4481,6 +4484,9 @@ public:
 wxIMPLEMENT_APP_NO_MAIN(ServerApp);
 
 int main(int argc, char** argv) {
+#ifdef _WIN32
+  SetConsoleOutputCP(CP_UTF8);   // render UTF-8 console output (em-dashes etc.) instead of mojibake
+#endif
   helm_net::init();      // WSAStartup on Windows (no-op elsewhere) for the raw NMEA sockets
   ix::initNetSystem();   // IXWebSocket net init (WSAStartup on Windows; ignores SIGPIPE on POSIX)
   wxEntryStart(argc, argv);

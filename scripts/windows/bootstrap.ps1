@@ -201,12 +201,18 @@ try {
   if($LASTEXITCODE -ne 0){ Die "helm-server build failed" }
 
   $exe = "$bld\cli\$Config\helm-server.exe"
+  if(-not (Test-Path $exe)){ Die "build reported success but helm-server.exe not found under $bld\cli\$Config" }
+
+  # Stage the prebuilt runtime DLLs next to the exe so it runs standalone (these
+  # are NOT built with helm-server; they are the wx + OpenCPN-bundle DLLs).
+  Say "stage runtime DLLs next to helm-server.exe"
+  $exeDir = Split-Path $exe
+  Get-ChildItem "$wxLib\*.dll" | Where-Object { $_.Name -notmatch 'ud_' } | Copy-Item -Destination $exeDir -Force  # release wx DLLs (skip debug *ud_*)
+  Copy-Item "$buildwin\*.dll" $exeDir -Force
+  Info "staged $((Get-ChildItem "$exeDir\*.dll").Count) DLLs"
+
   Say "DONE"
-  if(Test-Path $exe){
-    Info "built: $exe"
-    Info "to run, put the wx + bundle DLLs on PATH first:"
-    Info "  `$env:PATH = `"$wxLib;$buildwin;`" + `$env:PATH"
-  } else {
-    Info "build reported success but helm-server.exe not found under $bld\cli\$Config"
-  }
+  Info "built: $exe"
+  Info "run it directly (DLLs are alongside it):  `"$exe`" --port 9001"
+  Info "chart data: set HELM_S57_DATA to your s57data dir, or place it at %USERPROFILE%\.helm\runtime\s57data"
 } finally { Pop-Location }
