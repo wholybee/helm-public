@@ -5,24 +5,34 @@
 #include <wx/string.h>
 #include <wx/window.h>
 
+// Fallback stubs for standalone tides tools. Three of them (gTimeSource,
+// OCPNMessageBox, DistanceBearingMercator) are ALSO provided by the real OpenCPN
+// model/gui (gui_vars / chart_stubs / georef). On GCC/clang the weak attribute
+// lets the real ones win when both are linked; MSVC has no weak-function
+// attribute (selectany is data-only), so on MSVC we defer those three to
+// chart-render, which helm-server always links. (Standalone Windows tides tools
+// would need them re-provided - not a Phase 1 target.)
 #if defined(__GNUC__)
 #define HELM_WEAK __attribute__((weak))
 #else
 #define HELM_WEAK
 #endif
 
+#ifndef _MSC_VER   // gTimeSource + OCPNMessageBox come from chart-render on MSVC
 HELM_WEAK wxDateTime gTimeSource;
 
 HELM_WEAK int OCPNMessageBox(wxWindow *, const wxString &, const wxString &,
                              int style, int, int, int) {
   return (style & wxYES_NO) ? wxID_NO : wxID_OK;
 }
+#endif
 
 HELM_WEAK wxDateTime toUsrDateTime(const wxDateTime ts, const int,
                                    const double) {
   return ts;
 }
 
+#ifndef _MSC_VER   // DistanceBearingMercator comes from chart-render (georef) on MSVC
 extern "C" HELM_WEAK void DistanceBearingMercator(double lat1, double lon1,
                                                   double lat0, double lon0,
                                                   double *brg, double *dist) {
@@ -49,3 +59,4 @@ extern "C" HELM_WEAK void DistanceBearingMercator(double lat1, double lon1,
     *brg = deg;
   }
 }
+#endif  // !_MSC_VER (DistanceBearingMercator from chart-render)

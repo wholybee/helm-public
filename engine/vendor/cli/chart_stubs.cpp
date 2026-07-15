@@ -20,6 +20,19 @@
 // The list below is "best effort": if the linker reports a symbol here as a
 // DUPLICATE, delete that line; if it reports one MISSING, add a one-liner.
 
+// These stubs DEFINE ocpn_plugin.h API symbols (GetpSharedDataLocation, ...),
+// which on Windows are declared __declspec(dllexport). ocpn_plugin.h is only
+// pulled in (transitively) further down, so make DECL_EXP available up front so
+// the definitions carry matching linkage. ocpn_plugin.h guards its own DECL_EXP
+// with #ifndef, so this pre-definition is picked up cleanly (no redefinition).
+#ifndef DECL_EXP
+#  if defined(_WIN32)
+#    define DECL_EXP __declspec(dllexport)
+#  else
+#    define DECL_EXP
+#  endif
+#endif
+
 #include <wx/string.h>
 #include <wx/window.h>
 #include <wx/frame.h>
@@ -55,7 +68,9 @@ bool     g_OsencVerbose = false;
 // chart-render LIBRARY owns it now (was duplicated per-main), so the library has
 // no back-reference to its host executable. Defaults to the in-repo data dir.
 wxString g_helm_shared_data = wxT("/tmp/opencpn/data/");
-extern "C" wxString* GetpSharedDataLocation() { return &g_helm_shared_data; }
+#ifndef _MSC_VER   // api_shim.cpp provides this on MSVC (helm-server links it)
+extern "C" DECL_EXP wxString* GetpSharedDataLocation() { return &g_helm_shared_data; }
+#endif
 
 // ---------------------------------------------------------------------------
 // ChartBase ctor/dtor/GetHashKey -- lifted from gui/src/chartimg.cpp:122-178 so
@@ -197,7 +212,9 @@ OCPNPlatform* g_Platform = nullptr;
 static wxFrame*  s_offscreen_frame = nullptr;
 static wxWindow* s_canvas_window = nullptr;
 
-extern "C" wxWindow* GetOCPNCanvasWindow() { return s_canvas_window; }
+#ifndef _MSC_VER   // api_shim.cpp provides this on MSVC
+extern "C" DECL_EXP wxWindow* GetOCPNCanvasWindow() { return s_canvas_window; }
+#endif
 
 // ---------------------------------------------------------------------------
 // EnsureHeadlessGlobals()
@@ -244,10 +261,12 @@ ThumbData::ThumbData() { pDIBThumb = NULL; }
 ThumbData::~ThumbData() { delete pDIBThumb; }
 
 // fromSM_Plugin -- lifted from ocpn_plugin_gui.cpp:649 (wraps model fromSM()).
+#ifndef _MSC_VER   // api_shim.cpp provides this on MSVC
 void fromSM_Plugin(double x, double y, double lat0, double lon0, double* lat,
                    double* lon) {
   fromSM(x, y, lat0, lon0, lat, lon);
 }
+#endif
 
 // ---------------------------------------------------------------------------
 // App-provided hook functions that the libs (s52plib) and the gui slice call,
@@ -263,10 +282,12 @@ void fromSM_Plugin(double x, double y, double lat0, double lon0, double* lat,
 // color_handler.cpp provides the C++ `wxColour GetGlobalColor(wxString)`, which
 // resolves out of ps52plib; we forward to it.
 wxColour GetGlobalColor(wxString colorName);  // from color_handler.cpp
-extern "C" bool GetGlobalColor(wxString colorName, wxColour* pcolour) {
+#ifndef _MSC_VER   // api_shim.cpp provides the 2-arg extern-C form on MSVC
+extern "C" DECL_EXP bool GetGlobalColor(wxString colorName, wxColour* pcolour) {
   if (pcolour) *pcolour = GetGlobalColor(colorName);
   return true;
 }
+#endif
 
 // navutil.cpp:2918
 bool LogMessageOnce(const wxString& /*msg*/) { return true; }
@@ -290,6 +311,7 @@ wxFont* GetOCPNScaledFont(wxString /*item*/, int default_size) {
 }
 
 // ocpn_plugin_gui.cpp:1480
+#ifndef _MSC_VER   // the following plugin-API stubs come from api_shim.cpp on MSVC
 wxFont* FindOrCreateFont_PlugIn(int point_size, wxFontFamily family,
                                 wxFontStyle style, wxFontWeight weight,
                                 bool underline, const wxString& facename,
@@ -311,6 +333,7 @@ float GetOCPNChartScaleFactor_Plugin() { return 1.0f; }
 
 // ocpn_plugin_gui.cpp:199
 wxFileConfig* GetOCPNConfigObject() { return nullptr; }
+#endif  // !_MSC_VER (plugin-API stubs from api_shim.cpp)
 
 // ---------------------------------------------------------------------------
 // Methods on heavy GUI classes (ChartCanvas / PlugInManager / glChartCanvas)

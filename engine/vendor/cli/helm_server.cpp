@@ -21,6 +21,7 @@
 // Links ocpn::chart-render (which pulls in model-src) + ixwebsocket — the helm-tiles
 // line. Bonjour uses the system dns_sd (libSystem on macOS, no extra link).
 
+#define _USE_MATH_DEFINES   // MSVC: expose M_PI et al. from <cmath> (no-op elsewhere)
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -44,6 +45,11 @@
 #include <array>
 #include <cstdint>
 #include <iomanip>
+
+// Cross-platform shims. net_compat.h MUST precede any wx/windows.h include so that
+// <winsock2.h> wins over the legacy winsock v1 that <windows.h> would otherwise pull.
+#include "net_compat.h"
+#include "plat_compat.h"
 
 #include <wx/app.h>
 #include <wx/bitmap.h>
@@ -88,20 +94,18 @@
 #include "ixwebsocket/IXHttpClient.h"
 #include "ixwebsocket/IXWebSocket.h"
 #include "ixwebsocket/IXConnectionState.h"
+#include "ixwebsocket/IXNetSystem.h"     // ix::initNetSystem() — WSAStartup on Windows
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <fcntl.h>
-#include <termios.h>
+// Socket/netdb/poll/fcntl/unistd headers come from net_compat.h (cross-platform).
 #include <functional>
-#include <poll.h>
 #include <cerrno>
 #include <sys/stat.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <dns_sd.h>
+#ifndef _WIN32
+#include <termios.h>      // POSIX serial (CONN-9); Windows serial is a separate task
+#endif
+#ifdef __APPLE__
+#include <dns_sd.h>       // Bonjour via system libSystem (macOS only)
+#endif
 
 // NOTE: g_pi_manager is provided by chart_stubs.cpp (inside ocpn::chart-render) — do NOT
 // redefine it here, or the link fails with a duplicate symbol. (This is the api_shim-vs-
@@ -135,6 +139,7 @@ static void resolve_runtime_paths() {
   wxString s57;
   if (const char* e = std::getenv("HELM_S57_DATA")) if (*e) s57 = wxString::FromUTF8(e);
   if (s57.IsEmpty()) s57 = wxString::FromUTF8(helm_runtime_path("s57data").c_str());
+  s57.Replace(wxT("\\"), wxT("/"));   // normalize Windows backslashes so the '/'-based logic below holds (Windows accepts '/')
   if (!s57.EndsWith(wxT("/"))) s57 += wxT("/");
   kS57Data = s57;
   kPLibRLE = s57 + wxT("S52RAZDS.RLE");
@@ -142,6 +147,7 @@ static void resolve_runtime_paths() {
   wxString senc;
   if (const char* e = std::getenv("HELM_SENC_DIR")) if (*e) senc = wxString::FromUTF8(e);
   if (senc.IsEmpty()) senc = wxString::FromUTF8(helm_runtime_path("senc").c_str());
+  senc.Replace(wxT("\\"), wxT("/"));   // same normalization
   if (!senc.EndsWith(wxT("/"))) senc += wxT("/");
   kSencDir = senc;
 }
@@ -1402,7 +1408,7 @@ static TideAcquisitionPlan tide_build_acquisition_plan(
     }
     std::string scheduler_state = query_param(uri, "scheduler_state");
     if (scheduler_state.empty()) {
-      ::mkdir(cache_dir.c_str(), 0700);
+      { std::error_code _ec; std::filesystem::create_directories(cache_dir, _ec); }
       scheduler_state = cache_dir + "/scheduler.tsv";
     }
     if (!tide_apply_scheduler_state(&plan.items, scheduler_state,
@@ -2514,10 +2520,10 @@ static bool run_vulkan_renderer_command(int z, long x, long y, const VulkanTileM
     std::string log;
     read_file(log_path.c_str(), log);
     if (error) *error = "shared renderer command failed: " + header_safe(log.empty() ? cmd.str() : log);
-    ::unlink(log_path.c_str());
+    { std::error_code _ec; std::filesystem::remove(log_path, _ec); }
     return false;
   }
-  ::unlink(log_path.c_str());
+  { std::error_code _ec; std::filesystem::remove(log_path, _ec); }
   return true;
 }
 
@@ -2527,27 +2533,17 @@ static TileStatus render_vulkan_tile(int z, long x, long y, const VulkanTileMeta
     out_error = "invalid tile coordinates";
     return TileStatus::BadRequest;
   }
-  const std::string tmpdir = env_or("TMPDIR", "/tmp");
-  std::string tmpl = tmpdir + "/helm-vulkan-tile-XXXXXX";
-  std::vector<char> path(tmpl.begin(), tmpl.end());
-  path.push_back('\0');
-  int fd = ::mkstemp(path.data());
-  if (fd < 0) {
-    out_error = "could not create temporary Vulkan tile output";
-    return TileStatus::RenderFailed;
-  }
-  ::close(fd);
-  const std::string output_path(path.data());
+  const std::string output_path = helm_temp_path("helm-vulkan-tile-", ".png");
   if (!run_vulkan_renderer_command(z, x, y, meta, output_path, &out_error)) {
-    ::unlink(output_path.c_str());
+    { std::error_code _ec; std::filesystem::remove(output_path, _ec); }
     return TileStatus::RenderFailed;
   }
   if (!read_file(output_path.c_str(), out_png)) {
     out_error = "shared renderer produced no readable PNG output";
-    ::unlink(output_path.c_str());
+    { std::error_code _ec; std::filesystem::remove(output_path, _ec); }
     return TileStatus::RenderFailed;
   }
-  ::unlink(output_path.c_str());
+  { std::error_code _ec; std::filesystem::remove(output_path, _ec); }
   if (!png_signature_ok(out_png)) {
     out_error = "shared renderer output was not PNG";
     return TileStatus::RenderFailed;
@@ -2977,53 +2973,53 @@ static std::string conn_dir() {
 static std::string conn_path() { return conn_dir() + "/connections.json"; }
 
 // Non-blocking TCP connect-out with a bounded timeout; resolves host (IP or name) via getaddrinfo.
-static int tcp_connect(const std::string& host, int port, int timeout_sec, std::string& err) {
+static helm_net::sock_t tcp_connect(const std::string& host, int port, int timeout_sec, std::string& err) {
   addrinfo hints{}; hints.ai_family = AF_UNSPEC; hints.ai_socktype = SOCK_STREAM;
   addrinfo* res = nullptr; char ports[16]; std::snprintf(ports, sizeof ports, "%d", port);
   int g = ::getaddrinfo(host.c_str(), ports, &hints, &res);
-  if (g != 0 || !res) { err = std::string("resolve: ") + gai_strerror(g); return -1; }
-  int fd = -1;
+  if (g != 0 || !res) { err = std::string("resolve: ") + gai_strerror(g); return helm_net::BAD_SOCK; }
+  helm_net::sock_t fd = helm_net::BAD_SOCK;
   for (addrinfo* p = res; p; p = p->ai_next) {
-    fd = ::socket(p->ai_family, p->ai_socktype, p->ai_protocol); if (fd < 0) continue;
-    int fl = ::fcntl(fd, F_GETFL, 0); ::fcntl(fd, F_SETFL, fl | O_NONBLOCK);
-    int rc = ::connect(fd, p->ai_addr, p->ai_addrlen);
-    if (rc == 0) { ::fcntl(fd, F_SETFL, fl); break; }
-    if (errno == EINPROGRESS) {
-      pollfd pfd{fd, POLLOUT, 0}; int pr = ::poll(&pfd, 1, timeout_sec * 1000);
-      if (pr > 0) { int se = 0; socklen_t sl = sizeof se; ::getsockopt(fd, SOL_SOCKET, SO_ERROR, &se, &sl);
-        if (se == 0) { ::fcntl(fd, F_SETFL, fl); break; } err = std::string("connect: ") + std::strerror(se); }
+    fd = ::socket(p->ai_family, p->ai_socktype, p->ai_protocol); if (fd == helm_net::BAD_SOCK) continue;
+    helm_net::set_nonblock(fd, true);
+    int rc = ::connect(fd, p->ai_addr, (int)p->ai_addrlen);
+    if (rc == 0) { helm_net::set_nonblock(fd, false); break; }
+    if (helm_net::in_progress()) {
+      pollfd pfd{fd, POLLOUT, 0}; int pr = helm_net::poll(&pfd, 1, timeout_sec * 1000);
+      if (pr > 0) { int se = helm_net::so_error(fd);
+        if (se == 0) { helm_net::set_nonblock(fd, false); break; } err = "connect: error " + std::to_string(se); }
       else err = (pr == 0) ? "connect: timeout" : "connect: poll error";
-    } else err = std::string("connect: ") + std::strerror(errno);
-    ::close(fd); fd = -1;
+    } else err = "connect: error " + std::to_string(helm_net::last_error());
+    helm_net::close_sock(fd); fd = helm_net::BAD_SOCK;
   }
   ::freeaddrinfo(res);
-  if (fd >= 0) { timeval tv{5, 0}; ::setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv); }
+  if (fd != helm_net::BAD_SOCK) { helm_net::set_rcv_timeout(fd, 5); }
   else if (err.empty()) err = "connect: failed";
   return fd;
 }
 // TCP server: bind+listen, wait (interruptibly) for ONE client, return its fd. Re-binds per client.
-static int tcp_server_accept(const std::string& host, int port, const std::shared_ptr<ConnRuntime>& rt, std::string& err) {
-  int srv = ::socket(AF_INET, SOCK_STREAM, 0); if (srv < 0) { err = "socket"; return -1; }
-  int yes = 1; ::setsockopt(srv, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof yes);
+static helm_net::sock_t tcp_server_accept(const std::string& host, int port, const std::shared_ptr<ConnRuntime>& rt, std::string& err) {
+  helm_net::sock_t srv = ::socket(AF_INET, SOCK_STREAM, 0); if (srv == helm_net::BAD_SOCK) { err = "socket"; return helm_net::BAD_SOCK; }
+  helm_net::set_reuseaddr(srv);
   sockaddr_in a{}; a.sin_family = AF_INET; a.sin_port = htons((uint16_t)port);
   a.sin_addr.s_addr = (host == "0.0.0.0" || host.empty()) ? INADDR_ANY : inet_addr(host.c_str());
-  if (::bind(srv, (sockaddr*)&a, sizeof a) < 0 || ::listen(srv, 4) < 0) { err = "bind/listen :" + std::to_string(port); ::close(srv); return -1; }
+  if (::bind(srv, (sockaddr*)&a, sizeof a) < 0 || ::listen(srv, 4) < 0) { err = "bind/listen :" + std::to_string(port); helm_net::close_sock(srv); return helm_net::BAD_SOCK; }
   for (;;) {
-    if (rt->want_stop) { ::close(srv); err = "stopped"; return -1; }
-    pollfd pfd{srv, POLLIN, 0}; int pr = ::poll(&pfd, 1, 1000);
-    if (pr > 0) { int c = ::accept(srv, nullptr, nullptr); ::close(srv);
-      if (c < 0) { err = "accept"; return -1; }
-      timeval tv{5, 0}; ::setsockopt(c, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv); return c; }
-    if (pr < 0) { ::close(srv); err = "poll"; return -1; }
+    if (rt->want_stop) { helm_net::close_sock(srv); err = "stopped"; return helm_net::BAD_SOCK; }
+    pollfd pfd{srv, POLLIN, 0}; int pr = helm_net::poll(&pfd, 1, 1000);
+    if (pr > 0) { helm_net::sock_t c = ::accept(srv, nullptr, nullptr); helm_net::close_sock(srv);
+      if (c == helm_net::BAD_SOCK) { err = "accept"; return helm_net::BAD_SOCK; }
+      helm_net::set_rcv_timeout(c, 5); return c; }
+    if (pr < 0) { helm_net::close_sock(srv); err = "poll"; return helm_net::BAD_SOCK; }
   }
 }
-static int udp_bind(const std::string& host, int port, std::string& err) {
-  int fd = ::socket(AF_INET, SOCK_DGRAM, 0); if (fd < 0) { err = "socket"; return -1; }
-  int yes = 1; ::setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof yes);
+static helm_net::sock_t udp_bind(const std::string& host, int port, std::string& err) {
+  helm_net::sock_t fd = ::socket(AF_INET, SOCK_DGRAM, 0); if (fd == helm_net::BAD_SOCK) { err = "socket"; return helm_net::BAD_SOCK; }
+  helm_net::set_reuseaddr(fd);
   sockaddr_in a{}; a.sin_family = AF_INET; a.sin_port = htons((uint16_t)port);
   a.sin_addr.s_addr = (host.empty() || host == "0.0.0.0") ? INADDR_ANY : inet_addr(host.c_str());
-  if (::bind(fd, (sockaddr*)&a, sizeof a) < 0) { err = "bind :" + std::to_string(port); ::close(fd); return -1; }
-  timeval tv{5, 0}; ::setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv); return fd;
+  if (::bind(fd, (sockaddr*)&a, sizeof a) < 0) { err = "bind :" + std::to_string(port); helm_net::close_sock(fd); return helm_net::BAD_SOCK; }
+  helm_net::set_rcv_timeout(fd, 5); return fd;
 }
 // Read NMEA lines off a connected fd until EOF/error/stop, feeding nmea_parse and updating status.
 // Generic line reader: poll+read an fd (works for sockets AND serial ttys), split on '\n', and
@@ -3033,21 +3029,21 @@ static int udp_bind(const std::string& host, int port, std::string& err) {
 // never reconnects. Detect prolonged silence and RETURN so conn_thread closes the fd and reconnects
 // — the automatic equivalent of the manual disable/enable "kick".
 static const long kRxStaleReconnect = 20;     // seconds of silence after which we drop + reconnect
-static void conn_read_lines(int fd, const std::shared_ptr<ConnRuntime>& rt,
+static void conn_read_lines(helm_net::sock_t fd, const std::shared_ptr<ConnRuntime>& rt,
                             const std::function<void(const std::string&)>& on_line) {
   std::string buf; char rb[2048];
   long connected_at = (long)std::time(nullptr);
   for (;;) {
     if (rt->want_stop) return;
-    pollfd pfd{fd, POLLIN, 0}; int pr = ::poll(&pfd, 1, 1000);
+    pollfd pfd{fd, POLLIN, 0}; int pr = helm_net::poll(&pfd, 1, 1000);
     if (pr == 0) {
       long idle = (long)std::time(nullptr) - (rt->last_rx ? (long)rt->last_rx : connected_at);
       if (idle > 10) rt->status = (int)ConnStatus::NoData;
       if (idle > kRxStaleReconnect) { rt->status = (int)ConnStatus::NoData; return; }   // half-open / silent peer → drop + reconnect
       continue;
     }
-    if (pr < 0) { if (errno == EINTR) continue; return; }
-    ssize_t n = ::read(fd, rb, sizeof rb);
+    if (pr < 0) { if (helm_net::interrupted()) continue; return; }
+    long n = helm_net::recv_bytes(fd, rb, sizeof rb);
     if (n > 0) {
       rt->last_rx = (long)std::time(nullptr); rt->status = (int)ConnStatus::Connected;
       buf.append(rb, (size_t)n); size_t nl;
@@ -3058,10 +3054,10 @@ static void conn_read_lines(int fd, const std::shared_ptr<ConnRuntime>& rt,
       }
       if (buf.size() > (1u << 16)) buf.clear();          // runaway guard (never a newline)
     } else if (n == 0) { return; }                       // peer closed / device gone
-    else { if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) continue; return; }
+    else { if (helm_net::would_block() || helm_net::interrupted()) continue; return; }
   }
 }
-static void conn_feed_fd(int fd, const std::shared_ptr<ConnRuntime>& rt, int prio, const std::string& conn_id) {
+static void conn_feed_fd(helm_net::sock_t fd, const std::shared_ptr<ConnRuntime>& rt, int prio, const std::string& conn_id) {
   conn_read_lines(fd, rt, [&](const std::string& line) { g_cur_source = conn_id; raw_capture(conn_id, line); nmea_parse(line, prio); rt->sentences++; });
 }
 // SignalK driver as a managed connection (CONN-5): a per-connection WebSocket that feeds the SAME
@@ -3102,24 +3098,31 @@ static void conn_feed_signalk(const ConnConfig& cfg, const std::shared_ptr<ConnR
   ws.stop();
 }
 
-// ---- CONN-9: serial NMEA (macOS boat-server; iOS has no serial path) ----
+// ---- CONN-9: serial NMEA (POSIX boat-server; Windows serial is a separate task) ----
+#ifndef _WIN32
 static speed_t baud_const(int b) {
   switch (b) { case 4800: return B4800; case 9600: return B9600; case 19200: return B19200;
     case 38400: return B38400; case 57600: return B57600; case 115200: return B115200; default: return B4800; }
 }
-static int serial_open(const std::string& dev, int baud, std::string& err) {        // address=device, port=baud
+static helm_net::sock_t serial_open(const std::string& dev, int baud, std::string& err) {  // address=device, port=baud
   int fd = ::open(dev.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK);
-  if (fd < 0) { err = std::string("open ") + dev + ": " + std::strerror(errno); return -1; }
+  if (fd < 0) { err = std::string("open ") + dev + ": " + std::strerror(errno); return helm_net::BAD_SOCK; }
   termios t{};
-  if (::tcgetattr(fd, &t) != 0) { err = "tcgetattr (not a serial device?)"; ::close(fd); return -1; }
+  if (::tcgetattr(fd, &t) != 0) { err = "tcgetattr (not a serial device?)"; ::close(fd); return helm_net::BAD_SOCK; }
   cfmakeraw(&t);
   speed_t sp = baud_const(baud > 0 ? baud : 4800);                                   // NMEA-0183 = 4800; AIS = 38400
   cfsetispeed(&t, sp); cfsetospeed(&t, sp);
   t.c_cflag |= (CLOCAL | CREAD); t.c_cflag &= ~CRTSCTS;
   t.c_cc[VMIN] = 0; t.c_cc[VTIME] = 0;
-  if (::tcsetattr(fd, TCSANOW, &t) != 0) { err = "tcsetattr"; ::close(fd); return -1; }
+  if (::tcsetattr(fd, TCSANOW, &t) != 0) { err = "tcsetattr"; ::close(fd); return helm_net::BAD_SOCK; }
   return fd;
 }
+#else
+static helm_net::sock_t serial_open(const std::string& dev, int /*baud*/, std::string& err) {
+  err = "serial NMEA input is not yet supported on Windows (" + dev + ")";
+  return helm_net::BAD_SOCK;   // TODO(win): CreateFile + DCB + COMMTIMEOUTS serial path
+}
+#endif
 
 // ---- CONN-8: NMEA 2000 over IP — decode the common single-frame PGNs from a YDWG/Actisense RAW
 //      stream (one CAN frame per line: "<time> <dir> <canid-hex> <b0..b7>") into the priority-aware
@@ -3158,7 +3161,7 @@ static void n2k_decode_line(const std::string& line, int prio) {
     if (wa!=0xFFFF) setf(g_real.wdir, wa*1e-4*R2D, now, "nmea2000", prio);          // 0..2π → 0..360°
   }
 }
-static void conn_feed_n2k(int fd, const std::shared_ptr<ConnRuntime>& rt, int prio, const std::string& conn_id) {
+static void conn_feed_n2k(helm_net::sock_t fd, const std::shared_ptr<ConnRuntime>& rt, int prio, const std::string& conn_id) {
   conn_read_lines(fd, rt, [&](const std::string& line){ g_cur_source = conn_id; raw_capture(conn_id, line); n2k_decode_line(line, prio); rt->sentences++; });
 }
 
@@ -3222,14 +3225,14 @@ static void conn_thread(std::string id, std::shared_ptr<ConnRuntime> rt) {
     rt->status = (int)ConnStatus::Connecting;
     if (cfg.type == "signalk") { conn_feed_signalk(cfg, rt); return; }   // SignalK WS driver — self-managed lifecycle + reconnect
     if (cfg.type == "internet-ais" && (cfg.address.rfind("ws://",0)==0 || cfg.address.rfind("wss://",0)==0)) { conn_feed_aisws(cfg, rt); return; }  // CONN-10 JSON/WS provider (aisstream)
-    std::string err; int fd = -1;
+    std::string err; helm_net::sock_t fd = helm_net::BAD_SOCK;
     if (cfg.type == "tcp-client" || cfg.type == "internet-ais") fd = tcp_connect(cfg.address, cfg.port, 6, err);  // internet-ais over TCP = raw !AIVDM → AisDecoder
     else if (cfg.type == "tcp-server") fd = tcp_server_accept(cfg.address.empty() ? "127.0.0.1" : cfg.address, cfg.port, rt, err);
     else if (cfg.type == "udp")        fd = udp_bind(cfg.address, cfg.port, err);
     else if (cfg.type == "serial")     fd = serial_open(cfg.address, cfg.port, err);                    // CONN-9 (port field = baud)
     else if (cfg.type == "nmea2000")   fd = (cfg.dataProtocol == "udp") ? udp_bind(cfg.address, cfg.port, err) : tcp_connect(cfg.address, cfg.port, 6, err);  // CONN-8 N2K-over-IP
     else { { std::lock_guard<std::mutex> lk(g_conns_mtx); rt->last_error = "unsupported type: " + cfg.type; } rt->status = (int)ConnStatus::Error; return; }
-    if (fd < 0) {
+    if (fd == helm_net::BAD_SOCK) {
       { std::lock_guard<std::mutex> lk(g_conns_mtx); rt->last_error = err; }
       rt->status = (int)ConnStatus::Error;
       for (int i = 0; i < backoff * 10 && !rt->want_stop; ++i) std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -3239,7 +3242,7 @@ static void conn_thread(std::string id, std::shared_ptr<ConnRuntime> rt) {
     { std::lock_guard<std::mutex> lk(g_conns_mtx); rt->last_error.clear(); }
     if (cfg.type == "nmea2000") conn_feed_n2k(fd, rt, cfg.priority, id);
     else                        conn_feed_fd(fd, rt, cfg.priority, id);
-    ::close(fd);
+    helm_net::close_sock(fd);
     if (rt->want_stop) return;
     rt->status = (int)ConnStatus::NoData;
     std::printf("connection %s: link dropped (closed or %lds silent) — reconnecting\n", id.c_str(), kRxStaleReconnect);
@@ -3322,7 +3325,7 @@ static void conn_save() {
         ",\"comment\":\"" + json_escape(c.comment) + "\"}";
       first = false; } }
   js += "]";
-  std::string dir = conn_dir(); ::mkdir(dir.c_str(), 0700);
+  std::string dir = conn_dir(); { std::error_code _ec; std::filesystem::create_directories(dir, _ec); }
   std::string path = conn_path(), tmp = path + ".tmp";
   { std::ofstream f(tmp, std::ios::binary | std::ios::trunc); if (!f) { std::fprintf(stderr, "conn_save: cannot write %s\n", tmp.c_str()); return; } f << js; }
   ::chmod(tmp.c_str(), 0600);
@@ -3373,7 +3376,7 @@ static void tokens_save() {
   { std::lock_guard<std::mutex> lk(g_tokens_mtx);
     for (auto& kv : g_tokens) { js += std::string(first ? "" : ",") + "{\"token\":\"" + json_escape(kv.first) + "\",\"role\":\"" + json_escape(kv.second.role) + "\",\"name\":\"" + json_escape(kv.second.name) + "\",\"issuedAt\":" + std::to_string(kv.second.issuedAt) + "}"; first = false; } }
   js += "]";
-  std::string dir = conn_dir(); ::mkdir(dir.c_str(), 0700);
+  std::string dir = conn_dir(); { std::error_code _ec; std::filesystem::create_directories(dir, _ec); }
   std::string path = tokens_path(), tmp = path + ".tmp";
   { std::ofstream f(tmp, std::ios::binary | std::ios::trunc); if (!f) { std::fprintf(stderr, "tokens_save: cannot write %s\n", tmp.c_str()); return; } f << js; }
   if (::rename(tmp.c_str(), path.c_str()) != 0) std::fprintf(stderr, "tokens_save: rename %s failed\n", path.c_str());
@@ -3511,7 +3514,7 @@ static void anchor_save() {
   std::string js; { std::lock_guard<std::mutex> lk(g_anchor_mtx);
     char b[160]; std::snprintf(b, sizeof b, "{\"set\":%s,\"lat\":%.6f,\"lon\":%.6f,\"radiusM\":%.1f}",
       g_anchor.set ? "true" : "false", g_anchor.lat, g_anchor.lon, g_anchor.radiusM); js = b; }
-  std::string dir = conn_dir(); ::mkdir(dir.c_str(), 0700);
+  std::string dir = conn_dir(); { std::error_code _ec; std::filesystem::create_directories(dir, _ec); }
   std::string path = anchor_path(), tmp = path + ".tmp";
   { std::ofstream f(tmp, std::ios::binary | std::ios::trunc); if (!f) return; f << js; }
   ::chmod(tmp.c_str(), 0600); ::rename(tmp.c_str(), path.c_str());
@@ -4131,6 +4134,7 @@ static void nav_loop(ix::HttpServer* server) {
 // ===========================================================================
 static std::string g_tls_fingerprint;            // SHA-256 of the serving cert (set by setup_tls below; empty if plaintext)
 static void bonjour_advertise(int port) {
+#ifdef __APPLE__
   static DNSServiceRef ref = nullptr;
   // CONTRACT-13: TXT record so a discovering client (native NWBrowser) can label the boat and decide
   // transport BEFORE connecting. v=protocol version, name=human boat name, tls=1 + fp=<cert sha256>
@@ -4150,6 +4154,10 @@ static void bonjour_advertise(int port) {
   if (err != kDNSServiceErr_NoError) { std::fprintf(stderr, "Bonjour: register failed (%d) — discovery off\n", err); return; }
   std::printf("Bonjour: advertising _helm._tcp on %d as \"%s\" (v=1 tls=%s%s)\n", port, name.c_str(), tlsOn ? "1" : "0", tlsOn ? " +fp" : "");
   std::thread([] { for (;;) { if (DNSServiceProcessResult(ref) != kDNSServiceErr_NoError) break; } }).detach();
+#else
+  (void)port;   // Bonjour/mDNS advertisement is macOS-only for now (see WINDOWS-PORT.md)
+  std::printf("Bonjour: mDNS advertisement not available on this platform; discovery off\n");
+#endif
 }
 
 // ===========================================================================
@@ -4168,21 +4176,21 @@ static bool setup_tls(ix::HttpServer* server, const char* bindHost) {   // sets 
     return false;
   }
   std::string cert = certEnv, key = keyEnv;
-  if (access(cert.c_str(), R_OK) != 0 || access(key.c_str(), R_OK) != 0) {     // missing → self-sign if allowed
+  if (helm_access_r(cert.c_str()) != 0 || helm_access_r(key.c_str()) != 0) {     // missing → self-sign if allowed
     if (!std::getenv("HELM_TLS_AUTO")) { std::fprintf(stderr, "TLS: FATAL — cert/key not readable (%s) and HELM_TLS_AUTO unset\n", cert.c_str()); return false; }
     std::string san = "DNS:helm.local,DNS:localhost,IP:127.0.0.1";
     if (std::strcmp(bindHost, "127.0.0.1") && std::strcmp(bindHost, "0.0.0.0")) san += ",IP:" + std::string(bindHost);
     std::string cmd = "openssl req -x509 -newkey rsa:2048 -nodes -days 3650 -subj '/CN=Helm' -addext 'subjectAltName=" + san + "' -keyout '" + key + "' -out '" + cert + "' >/dev/null 2>&1";
     std::printf("TLS: self-signing cert -> %s (no CA; TOFU fingerprint pinning)\n", cert.c_str());
-    if (std::system(cmd.c_str()) != 0 || access(cert.c_str(), R_OK) != 0) { std::fprintf(stderr, "TLS: FATAL — self-sign failed (is openssl on PATH?)\n"); return false; }
+    if (std::system(cmd.c_str()) != 0 || helm_access_r(cert.c_str()) != 0) { std::fprintf(stderr, "TLS: FATAL — self-sign failed (is openssl on PATH?)\n"); return false; }
   }
   // SHA-256 fingerprint via the openssl CLI (no extra link deps) — for Bonjour TXT + TOFU pairing.
   std::string fpcmd = "openssl x509 -in '" + cert + "' -noout -fingerprint -sha256 2>/dev/null";
-  if (FILE* f = popen(fpcmd.c_str(), "r")) {
+  if (FILE* f = HELM_POPEN(fpcmd.c_str(), "r")) {
     char buf[256]; if (fgets(buf, sizeof buf, f)) { std::string s = buf; size_t eq = s.find('=');
       if (eq != std::string::npos) { g_tls_fingerprint = s.substr(eq + 1);
         while (!g_tls_fingerprint.empty() && (g_tls_fingerprint.back() == '\n' || g_tls_fingerprint.back() == '\r')) g_tls_fingerprint.pop_back(); } }
-    pclose(f);
+    HELM_PCLOSE(f);
   }
   ix::SocketTLSOptions opts; opts.tls = true; opts.certFile = cert; opts.keyFile = key;
   opts.caFile = "NONE";   // no mTLS — clients pin the SERVER cert fingerprint (TOFU); default "SYSTEM" would demand a client cert
@@ -4473,6 +4481,8 @@ public:
 wxIMPLEMENT_APP_NO_MAIN(ServerApp);
 
 int main(int argc, char** argv) {
+  helm_net::init();      // WSAStartup on Windows (no-op elsewhere) for the raw NMEA sockets
+  ix::initNetSystem();   // IXWebSocket net init (WSAStartup on Windows; ignores SIGPIPE on POSIX)
   wxEntryStart(argc, argv);
   wxTheApp->CallOnInit();
   ServerApp* app = static_cast<ServerApp*>(wxTheApp);

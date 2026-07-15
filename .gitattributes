@@ -1,0 +1,27 @@
+# Line-ending policy — protects the Windows port.
+#
+# The OpenCPN patch series is applied with `git apply` against a freshly fetched
+# upstream tree. If Git rewrites these files to CRLF on a Windows checkout, the
+# patches fail to apply (context/line mismatch). Pin them — and the POSIX shell
+# scripts that must run under Git Bash / WSL — to LF everywhere.
+
+# Normalize text by default, let Git decide per-file otherwise.
+* text=auto
+
+# POSIX shell + patch series: ALWAYS LF, even on Windows checkouts.
+*.sh              text eol=lf
+*.patch           text eol=lf
+engine/patches/** text eol=lf
+engine/vendor/**  text eol=lf
+
+# Windows-native scripts: CRLF.
+*.ps1  text eol=crlf
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+
+# Binary assets Git must never touch.
+*.png  binary
+*.rle  binary
+*.000  binary
+*.mbtiles binary
+*.pmtiles binary

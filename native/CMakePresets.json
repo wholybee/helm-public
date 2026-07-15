@@ -20,6 +20,21 @@
       }
     },
     {
+      "name": "windows-debug",
+      "displayName": "Windows Debug (MSVC)",
+      "description": "Open in VSCode (CMake Tools) or Visual Studio on Windows. Change the generator string if you have VS 2022 instead of 2026.",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/windows-debug"
+    },
+    {
+      "name": "windows-release",
+      "displayName": "Windows Release (MSVC)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/windows-release"
+    },
+    {
       "name": "ios-simulator-release",
       "displayName": "iOS Simulator Release (static library only)",
       "generator": "Unix Makefiles",
@@ -49,6 +64,8 @@
   "buildPresets": [
     { "name": "macos-debug", "configurePreset": "macos-debug" },
     { "name": "macos-release", "configurePreset": "macos-release" },
+    { "name": "windows-debug", "configurePreset": "windows-debug", "configuration": "Debug" },
+    { "name": "windows-release", "configurePreset": "windows-release", "configuration": "Release" },
     { "name": "ios-simulator-release", "configurePreset": "ios-simulator-release" },
     { "name": "iphoneos-release", "configurePreset": "iphoneos-release" }
   ],
@@ -56,6 +73,12 @@
     {
       "name": "macos-debug",
       "configurePreset": "macos-debug",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "windows-debug",
+      "configurePreset": "windows-debug",
+      "configuration": "Debug",
       "output": { "outputOnFailure": true }
     }
   ]

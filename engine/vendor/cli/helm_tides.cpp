@@ -7,11 +7,12 @@
 #include <cstring>
 #include <cstdlib>
 #include <cctype>
+#include <filesystem>
 #include <fstream>
 #include <limits>
 #include <map>
 #include <sstream>
-#include <sys/stat.h>
+#include <system_error>
 #include <utility>
 
 #include "rapidjson/document.h"
@@ -234,16 +235,17 @@ std::string ParentDir(const std::string &path) {
 }
 
 bool DirectoryExists(const std::string &path) {
-  struct stat st {};
-  return ::stat(path.c_str(), &st) == 0 && S_ISDIR(st.st_mode);
+  std::error_code ec;
+  return std::filesystem::is_directory(path, ec);
 }
 
 bool MkdirIfNeeded(const std::string &path, std::string *error) {
   if (path.empty() || DirectoryExists(path)) return true;
-  if (::mkdir(path.c_str(), 0755) == 0 || errno == EEXIST) return true;
+  std::error_code ec;
+  std::filesystem::create_directories(path, ec);
+  if (!ec || DirectoryExists(path)) return true;
   if (error) {
-    *error = "could not create directory: " + path + " errno=" +
-             std::to_string(errno);
+    *error = "could not create directory: " + path + " (" + ec.message() + ")";
   }
   return false;
 }

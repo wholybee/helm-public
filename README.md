@@ -68,7 +68,8 @@ input. See [docs/OPENCPN-REUSE.md](docs/OPENCPN-REUSE.md).
 | Charts | Helm does not include chart packs. Real S-52 tiles require user-provided OpenCPN-compatible charts such as NOAA ENC `.000` cells, pointed to with `HELM_ENC`. |
 | Local basemaps | User-owned MBTiles/raster packs stay local and are served at runtime; do not commit chart packs or private imagery to Git. |
 | Boat data | Live movement requires NMEA 0183, SignalK, or another configured input. The server does not silently invent live boat data. |
-| Linux / Windows | Not a one-command supported path yet. Expect porting/dependency work. |
+| Windows | Alpha source build — one command (`scripts\windows\bootstrap.ps1`, 32-bit/OpenCPN-native). See [docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md). |
+| Linux | Not a one-command supported path yet. Expect porting/dependency work. |
 | Native desktop/mobile app | Not shipped yet. |
 
 ## The three differentiators
@@ -112,6 +113,7 @@ input. See [docs/OPENCPN-REUSE.md](docs/OPENCPN-REUSE.md).
 | [docs/PUBLIC-SYMBOL-FEEDBACK.md](docs/PUBLIC-SYMBOL-FEEDBACK.md) | How to review the public clean-room symbol catalog and submit machine-readable feedback |
 | [docs/CHART-QUILTING.md](docs/CHART-QUILTING.md) | Multi-cell S-52 tiler → quilting; where OpenCPN's quilt code falls short vs ours |
 | [docs/RUNBOOK.md](docs/RUNBOOK.md) | **Build & run on macOS** — bootstrap the engine, run the stack, feature-by-feature verification checklist |
+| [docs/BUILD-WINDOWS.md](docs/BUILD-WINDOWS.md) | **Build & run on Windows** — one-command source build (`scripts\windows\bootstrap.ps1`, 32-bit/OpenCPN-native) |
 | [docs/integrations/noforeignland.md](docs/integrations/noforeignland.md) | NoForeignLand + community-places overlay scope |
 | [TRACER-BULLET.md](TRACER-BULLET.md) | **The first code** — run the pipeline + prototype |
 | [pipeline/](pipeline/) | Reusable engine: tiler · depth · wind |

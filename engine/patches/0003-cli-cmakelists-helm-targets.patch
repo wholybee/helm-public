@@ -1,8 +1,8 @@
 diff --git a/cli/CMakeLists.txt b/cli/CMakeLists.txt
-index 1909f44..ae59f3e 100644
+index 1909f44..78370a1 100644
 --- a/cli/CMakeLists.txt
 +++ b/cli/CMakeLists.txt
-@@ -90,3 +90,220 @@ if (APPLE)
+@@ -90,3 +90,223 @@ if (APPLE)
                                 XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
    )
  endif ()
@@ -215,10 +215,13 @@ index 1909f44..ae59f3e 100644
 +target_link_libraries(helm-basemap-cache PRIVATE ixwebsocket)
 +
 +# ---- Helm one-origin server: nav WS + S-52 tile HTTP + static UI on ONE port ----
-+add_executable(helm-server helm_server.cpp)
++add_executable(helm-server helm_server.cpp api_shim.cpp)
 +set_property(TARGET helm-server PROPERTY ENABLE_EXPORTS ON)
 +target_include_directories(helm-server PRIVATE ${PROJECT_SOURCE_DIR}/libs/IXWebSocket)
 +target_link_libraries(helm-server PRIVATE ocpn::chart-render ocpn::tides ixwebsocket)
++if (WIN32)
++  target_link_libraries(helm-server PRIVATE psapi)
++endif ()
 +
 +# ---- Vulkan renderer fixture checker: standalone C++ command/golden harness ----
 +add_executable(helm-vulkan-fixture-check helm_vulkan_fixture_check.cpp)

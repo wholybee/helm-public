@@ -1,0 +1,14 @@
+{
+  "$comment": "Helm engine cross-platform dependency manifest (Phase 0 Windows port). wxWidgets is PINNED to 3.2.x: OpenCPN's pinned SHA needs wxNode, which upstream removed in 3.3 (see engine/vendor/OPENCPN_REF). builtin-baseline is the vcpkg commit the overrides resolve against.",
+  "name": "helm-engine",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "gdal",
+    "libarchive",
+    "wxwidgets"
+  ],
+  "builtin-baseline": "f6672d8e480ccdecddfad3fd1b838ba369ffe6cd",
+  "overrides": [
+    { "name": "wxwidgets", "version": "3.2.8.1" }
+  ]
+}
