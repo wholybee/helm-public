@@ -2,7 +2,7 @@ diff --git a/cli/CMakeLists.txt b/cli/CMakeLists.txt
 index 1909f44..78370a1 100644
 --- a/cli/CMakeLists.txt
 +++ b/cli/CMakeLists.txt
-@@ -90,3 +90,223 @@ if (APPLE)
+@@ -90,3 +90,230 @@ if (APPLE)
                                 XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
    )
  endif ()
@@ -215,7 +215,14 @@ index 1909f44..78370a1 100644
 +target_link_libraries(helm-basemap-cache PRIVATE ixwebsocket)
 +
 +# ---- Helm one-origin server: nav WS + S-52 tile HTTP + static UI on ONE port ----
-+add_executable(helm-server helm_server.cpp api_shim.cpp)
++# api_shim.cpp is WIN32-only: on MSVC the plugin-API stubs in chart_stubs.cpp are
++# #ifndef _MSC_VER'd out, so helm-server links api_shim.cpp to supply them. On
++# macOS/Linux those stubs live in libhelm-chartrender.a, so also compiling
++# api_shim.cpp here would duplicate GetpSharedDataLocation() et al.
++add_executable(helm-server helm_server.cpp)
++if (WIN32)
++  target_sources(helm-server PRIVATE api_shim.cpp)
++endif ()
 +set_property(TARGET helm-server PROPERTY ENABLE_EXPORTS ON)
 +target_include_directories(helm-server PRIVATE ${PROJECT_SOURCE_DIR}/libs/IXWebSocket)
 +target_link_libraries(helm-server PRIVATE ocpn::chart-render ocpn::tides ixwebsocket)
