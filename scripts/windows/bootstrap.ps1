@@ -118,7 +118,12 @@ try {
     git config core.autocrlf input      # keep upstream LF so the patch series applies
     git remote add origin $remote 2>$null
   }
-  if(-not (git cat-file -e "$sha^{commit}" 2>$null)){ git -c core.longpaths=true fetch --depth 1 origin $sha }
+  # Is the pinned commit already present? Use rev-parse --verify -q (no stderr on
+  # miss) + $LASTEXITCODE, NOT `git ... 2>$null` inside an if() -- under
+  # $ErrorActionPreference='Stop', PowerShell 5.1 turns a native command's
+  # redirected stderr into a terminating error, which aborts on a fresh clone.
+  git rev-parse --verify -q "$sha^{commit}" | Out-Null
+  if($LASTEXITCODE -ne 0){ git -c core.longpaths=true fetch --depth 1 origin $sha }
   git -c core.longpaths=true checkout -q --detach $sha
   git -c core.longpaths=true reset --hard -q $sha
   git -c core.longpaths=true clean -fdq -e build-win -e cache
